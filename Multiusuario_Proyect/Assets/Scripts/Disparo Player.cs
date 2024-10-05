@@ -8,25 +8,46 @@ public class DisparoPlayer : MonoBehaviour
     public GameObject canon;
     public Transform Tank;
 
+    [Header("Municion")]
+    public bool CanShoot;
+    public int ActualAmmo = 0;
+    public int MaxAmmo = 3;
+    public SphereCollider AmmoItemTrigger;
+    public GameObject AmmoItemGO;
+
     public float launchSpeed;
-    // Start is called before the first frame update
-    void Start()
+
+    private void OnTriggerEnter(Collider other)
     {
-        
+        if(other == AmmoItemTrigger)
+        {
+            AmmoItemGO.SetActive(false);
+            ActualAmmo = MaxAmmo;
+            CanShoot = true;
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (CanShoot)
         {
-            CreateBullet();
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                CreateBullet();
+            }
         }
+
+        if(ActualAmmo <= 0)
+        {
+            CanShoot = false;
+        }
+
     }
     void CreateBullet()
     {
         GameObject shell = Instantiate(bullet, canon.transform.position, canon.transform.rotation);
         shell.GetComponent<Rigidbody>().velocity = launchSpeed * Tank.forward;
+        ActualAmmo -= 1;
 
     }
 }
