@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Wall
+  - Jugador
+  - Proyectil
   layers:
   - Default
   - TransparentFX
@@ -13,12 +16,12 @@ TagManager:
   - UI
   - 
   - 
+  - Jugador1
+  - Jugador2
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - Proyectil1
+  - Proyectil2
   - 
   - 
   - 

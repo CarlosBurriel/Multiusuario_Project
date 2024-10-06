@@ -6,7 +6,10 @@ public class HitBullet : MonoBehaviour
 {
     private void OnCollisionEnter(Collision other)
     {
-        if(other.gameObject.tag == "Wall")
+       
+
+
+        if(other.gameObject.tag == "Wall" || other.gameObject.tag == "Jugador")
         {
             Destroy(this.gameObject);
 

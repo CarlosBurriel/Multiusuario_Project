@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3095687400415113418}
   - component: {fileID: 2993107879071362672}
   - component: {fileID: 1778566887934340502}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 700026376509423424}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "PuntaCa\xF1on"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -157,7 +157,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3910483741845977289}
   - component: {fileID: 8617420299860586582}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Virtual Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -234,9 +234,9 @@ GameObject:
   - component: {fileID: 1037656665219865422}
   - component: {fileID: 7074317065038876891}
   - component: {fileID: 1694001300659687904}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Jugador
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -390,4 +390,9 @@ MonoBehaviour:
   bullet: {fileID: 7344380490850080473, guid: f2164c3e7fa352b4fa6c30844c362133, type: 3}
   canon: {fileID: 2654533079713505548}
   Tank: {fileID: 5469148118466103024}
+  CanShoot: 0
+  ActualAmmo: 0
+  MaxAmmo: 3
+  AmmoItemTrigger: {fileID: 0}
+  AmmoItemGO: {fileID: 0}
   launchSpeed: 10
