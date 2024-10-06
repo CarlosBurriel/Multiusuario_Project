@@ -33,8 +33,28 @@ public class PlayerMovement : MonoBehaviour
 
         float rotation = Input.GetAxis("Horizontal") * rotationSpeed;
         rotation *= Time.deltaTime;
-        transform.Rotate(0, rotation, 0); 
+        transform.Rotate(0, rotation, 0);
+
+
+
+        if (vidasPlayer <= 0)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.tag == "Proyectil")
+        {
+            vidasPlayer -= 1;
+        }
 
+        if(other.gameObject.tag == "Power-Up")
+        {
+
+        }
+    }
+
+    
 }
