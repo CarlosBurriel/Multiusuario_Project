@@ -12,8 +12,12 @@ public class PlayerMovement : MonoBehaviour
 
     public GameObject puntacanon;
 
+    
+
     public int vidasPlayer;               //Lives
 
+
+   
 
 
     // Start is called before the first frame update
@@ -50,11 +54,13 @@ public class PlayerMovement : MonoBehaviour
             vidasPlayer -= 1;
         }
 
-        if(other.gameObject.tag == "Power-Up")
-        {
 
-        }
+
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+
+       
     }
 
-    
 }

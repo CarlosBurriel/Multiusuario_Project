@@ -16,6 +16,14 @@ public class DisparoPlayer : MonoBehaviour
     public GameObject AmmoItemGO;
 
     public float launchSpeed;
+    //public PlayerMovement poder;
+    public bool rebote;
+
+    public GameObject PowerUp;
+    public bool tiene_powerup;
+    public CapsuleCollider PowerUpTrigger;
+
+    public HitBullet bala;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -24,6 +32,11 @@ public class DisparoPlayer : MonoBehaviour
             AmmoItemGO.SetActive(false);
             ActualAmmo = MaxAmmo;
             CanShoot = true;
+        }
+        if (other == PowerUpTrigger)
+        {
+            PowerUp.SetActive(false);
+            tiene_powerup = true;
         }
     }
 
@@ -45,6 +58,13 @@ public class DisparoPlayer : MonoBehaviour
     }
     void CreateBullet()
     {
+        if(tiene_powerup == true)
+        {
+            bala.rebotepared = true;
+            bala.tienepoder = true;
+            tiene_powerup = false;
+            print("balarebota");
+        }
         GameObject shell = Instantiate(bullet, canon.transform.position, canon.transform.rotation);
         shell.GetComponent<Rigidbody>().velocity = launchSpeed * Tank.forward;
         ActualAmmo -= 1;

@@ -146,6 +146,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea9e464efeaf52241861f2705f13db90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rebotepared: 1
+  rebotepared: 0
   Proyectil: {fileID: 2076661088743441492}
   rebotespeed: 10
+  numeroRebotes: 3
+  poder: {fileID: 1694001300659687904, guid: fba7ab37a3fd0b04da237e768364e038, type: 3}

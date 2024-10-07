@@ -396,3 +396,8 @@ MonoBehaviour:
   AmmoItemTrigger: {fileID: 0}
   AmmoItemGO: {fileID: 0}
   launchSpeed: 10
+  rebote: 0
+  PowerUp: {fileID: 0}
+  tiene_powerup: 0
+  PowerUpTrigger: {fileID: 0}
+  bala: {fileID: 4467327506338585840, guid: f2164c3e7fa352b4fa6c30844c362133, type: 3}
