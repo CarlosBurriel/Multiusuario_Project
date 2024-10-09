@@ -16,12 +16,13 @@ public class DisparoPlayer : MonoBehaviour
     public GameObject AmmoItemGO;
 
     public float launchSpeed;
-    //public PlayerMovement poder;
+
+    [Header("PowerUp Rebote")]
     public bool rebote;
 
-    public GameObject PowerUp;
     public bool tiene_powerup;
-    public CapsuleCollider PowerUpTrigger;
+    public SphereCollider PowerUpTrigger;
+    public GameObject PowerUpGO;
 
     public HitBullet bala;
 
@@ -35,7 +36,7 @@ public class DisparoPlayer : MonoBehaviour
         }
         if (other == PowerUpTrigger)
         {
-            PowerUp.SetActive(false);
+            PowerUpGO.SetActive(false);
             tiene_powerup = true;
         }
     }
