@@ -5,18 +5,23 @@ using UnityEngine.InputSystem;
 
 public class ShootBehaviour : MonoBehaviour
 {
-
+    #region Public Variables
     [SerializeField]private int Ammo = 0;
     public int MaxAmmo = 5;
     public bool HasPowerUp = false;
 
+    public ScriptableBullet CommonBullet;
+    #endregion
 
-    public ScriptableBullet Bullet;
+    #region Private Variables
+    private ScriptableBullet BulletHolder;
     private Transform Canon;
+    #endregion
 
     private void Start()
     {
         Canon = transform.GetChild(0);
+        BulletHolder = CommonBullet;
     }
 
     #region InputHandling
@@ -41,24 +46,28 @@ public class ShootBehaviour : MonoBehaviour
         if (Ammo > 0)
         {
             Ammo--;
-            GameObject Projectile = Instantiate(Bullet.BulletType, Canon.transform.position, Canon.transform.rotation);
-            OnProjectileSpawn(Projectile);
+            OnProjectileSpawn();
         }
     }
 
-    public void OnProjectileSpawn(GameObject ProjectileFunction)
+    public void OnProjectileSpawn()
     {
-        if (Bullet.PhysicMaterial) { ProjectileFunction.GetComponent<Collider>().material = Bullet.PhysicMaterial; }
-        if (Bullet.BulletMaterial) { ProjectileFunction.GetComponent<MeshRenderer>().material = Bullet.BulletMaterial; }
-        ProjectileFunction.GetComponent<BulletBehaviour>().BulletLife = Bullet.BulletBounces;
-        ProjectileFunction.GetComponent<Rigidbody>().velocity = transform.forward * Bullet.LaunchSpeed;
+            GameObject Projectile = Instantiate(BulletHolder.BulletType, Canon.transform.position, Canon.transform.rotation);
+            
+            if (BulletHolder.PhysicMaterial) { Projectile.GetComponent<Collider>().material = BulletHolder.PhysicMaterial; }
+            if (BulletHolder.BulletMaterial) { Projectile.GetComponent<MeshRenderer>().material = BulletHolder.BulletMaterial; }
+            Projectile.GetComponent<BulletBehaviour>().BulletLife = BulletHolder.BulletBounces;
+            Projectile.GetComponent<Rigidbody>().velocity = transform.forward * BulletHolder.LaunchSpeed;
+            
+            if (HasPowerUp) { HasPowerUp = false; BulletHolder = CommonBullet; }
     }
     #endregion
     public void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "AmmoPackage")
         {
-            Bullet = other.GetComponent<AmmoPackageBehaviour>().ThisPackageBullet;
+            BulletHolder = other.GetComponent<AmmoPackageBehaviour>().ThisPackageBullet;
+            if (BulletHolder.IsPowerUp) {HasPowerUp = true; } else { Ammo = MaxAmmo; }
             Destroy(other.gameObject);
         }
     }

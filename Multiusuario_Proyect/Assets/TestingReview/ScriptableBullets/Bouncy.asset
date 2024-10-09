@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LaunchSpeed: 25
   BulletBounces: 2
-  IsPowerUp: 0
+  IsPowerUp: 1
   BulletType: {fileID: 6347236056145011887, guid: 3269f00597bac784c97fa4285c924d53, type: 3}
-  BulletMaterial: {fileID: 2100000, guid: ca0df80b6fc31834d8432bd0b384d47e, type: 2}
+  BulletMaterial: {fileID: 2100000, guid: 5e2bae49dd0c5a5458cc9e841cd34def, type: 2}
   PhysicMaterial: {fileID: 13400000, guid: f1a8de3d5c638b34b8e700c4a8e3cc58, type: 2}

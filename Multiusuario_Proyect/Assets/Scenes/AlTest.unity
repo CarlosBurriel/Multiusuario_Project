@@ -1366,7 +1366,7 @@ MonoBehaviour:
   Ammo: 5
   MaxAmmo: 5
   HasPowerUp: 0
-  Bullet: {fileID: 11400000, guid: e730524b53566f542b9145c459545b76, type: 2}
+  CommonBullet: {fileID: 11400000, guid: e730524b53566f542b9145c459545b76, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
