@@ -19,7 +19,7 @@ public class BulletBehaviour : MonoBehaviour
 
     void CheckLife()
     {
-        if (BulletLife <= 0)
+        if (BulletLife < 0)
         {
             Destroy(gameObject);
         }

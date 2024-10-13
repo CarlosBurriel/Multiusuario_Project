@@ -16,10 +16,12 @@ public class ShootBehaviour : MonoBehaviour
     #region Private Variables
     private ScriptableBullet BulletHolder;
     private Transform Canon;
+    private Collider ThisCollider;
     #endregion
 
     private void Start()
     {
+        ThisCollider = GetComponent<Collider>();
         Canon = transform.GetChild(0);
         BulletHolder = CommonBullet;
     }
@@ -54,6 +56,7 @@ public class ShootBehaviour : MonoBehaviour
     {
             GameObject Projectile = Instantiate(BulletHolder.BulletType, Canon.transform.position, Canon.transform.rotation);
             
+            Physics.IgnoreCollision(ThisCollider, Projectile.GetComponent<Collider>());
             if (BulletHolder.PhysicMaterial) { Projectile.GetComponent<Collider>().material = BulletHolder.PhysicMaterial; }
             if (BulletHolder.BulletMaterial) { Projectile.GetComponent<MeshRenderer>().material = BulletHolder.BulletMaterial; }
             Projectile.GetComponent<BulletBehaviour>().BulletLife = BulletHolder.BulletBounces;

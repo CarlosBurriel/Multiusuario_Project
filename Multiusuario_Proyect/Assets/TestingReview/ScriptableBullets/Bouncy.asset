@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Bouncy
   m_EditorClassIdentifier: 
   LaunchSpeed: 25
-  BulletBounces: 2
+  BulletBounces: 1
   IsPowerUp: 1
   BulletType: {fileID: 6347236056145011887, guid: 3269f00597bac784c97fa4285c924d53, type: 3}
   BulletMaterial: {fileID: 2100000, guid: 5e2bae49dd0c5a5458cc9e841cd34def, type: 2}

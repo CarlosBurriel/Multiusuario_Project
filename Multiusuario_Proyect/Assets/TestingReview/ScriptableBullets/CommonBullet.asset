@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CommonBullet
   m_EditorClassIdentifier: 
   LaunchSpeed: 25
-  BulletBounces: 1
+  BulletBounces: 0
   IsPowerUp: 0
   BulletType: {fileID: 6347236056145011887, guid: 3269f00597bac784c97fa4285c924d53, type: 3}
   BulletMaterial: {fileID: 2100000, guid: ca0df80b6fc31834d8432bd0b384d47e, type: 2}
