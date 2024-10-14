@@ -6,11 +6,11 @@ public class BulletBehaviour : MonoBehaviour
 {
     [HideInInspector] public int BulletLife;
 
-    [HideInInspector] public int BulletDamage;
+    [HideInInspector] public int BulletDamage = 1;
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Wall")
+        if (collision.gameObject.CompareTag("Wall"))
         {
             BulletLife--;
             CheckLife();

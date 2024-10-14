@@ -8,7 +8,7 @@ public class HpAndFeedback : MonoBehaviour
     public int MaxHP;
 
 
-    private int CurrentHP;
+    [SerializeField]private int CurrentHP;
 
     private Collider cl;
 
@@ -19,12 +19,12 @@ public class HpAndFeedback : MonoBehaviour
         cl = GetComponent<Collider>();
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public void OnCollisionEnter(Collision collision)
     {
-        if (cl.tag == "Damage")
+        
+        if (collision.gameObject.CompareTag("Damage"))
         {
-            print(2);
-            CurrentHP -= cl.GetComponent<BulletBehaviour>().BulletDamage;
+            CurrentHP -= collision.gameObject.GetComponent<BulletBehaviour>().BulletDamage;
             CheckLife();
         }
     }

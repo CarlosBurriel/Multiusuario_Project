@@ -59,6 +59,7 @@ public class ShootBehaviour : MonoBehaviour
             Physics.IgnoreCollision(ThisCollider, Projectile.GetComponent<Collider>());
             if (BulletHolder.PhysicMaterial) { Projectile.GetComponent<Collider>().material = BulletHolder.PhysicMaterial; }
             if (BulletHolder.BulletMaterial) { Projectile.GetComponent<MeshRenderer>().material = BulletHolder.BulletMaterial; }
+            Projectile.GetComponent<BulletBehaviour>().BulletDamage = BulletHolder.BulletDamage;
             Projectile.GetComponent<BulletBehaviour>().BulletLife = BulletHolder.BulletBounces;
             Projectile.GetComponent<Rigidbody>().velocity = transform.forward * BulletHolder.LaunchSpeed;
             
@@ -67,7 +68,7 @@ public class ShootBehaviour : MonoBehaviour
     #endregion
     public void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "AmmoPackage")
+        if (other.gameObject.CompareTag("AmmoPackage"))
         {
             BulletHolder = other.GetComponent<AmmoPackageBehaviour>().ThisPackageBullet;
             if (BulletHolder.IsPowerUp) {HasPowerUp = true; Ammo++; } else { Ammo = MaxAmmo; }
