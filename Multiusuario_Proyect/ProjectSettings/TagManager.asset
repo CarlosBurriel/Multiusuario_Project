@@ -5,25 +5,23 @@ TagManager:
   serializedVersion: 2
   tags:
   - Wall
-  - Jugador
-  - Proyectil
-  - Power-Up
-  - PowerUp
+  - AmmoPackage
+  - Damage
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
+  - Projectile
   - 
   - 
-  - Jugador1
-  - Jugador2
   - 
   - 
-  - Proyectil1
-  - Proyectil2
+  - 
+  - 
+  - 
   - 
   - 
   - 

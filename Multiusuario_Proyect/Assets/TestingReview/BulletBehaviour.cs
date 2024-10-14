@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class BulletBehaviour : MonoBehaviour
 {
-    [HideInInspector]public int BulletLife;
+    [HideInInspector] public int BulletLife;
+
+    [HideInInspector] public int BulletDamage;
 
     private void OnCollisionEnter(Collision collision)
     {

@@ -70,7 +70,8 @@ public class ShootBehaviour : MonoBehaviour
         if (other.gameObject.tag == "AmmoPackage")
         {
             BulletHolder = other.GetComponent<AmmoPackageBehaviour>().ThisPackageBullet;
-            if (BulletHolder.IsPowerUp) {HasPowerUp = true; } else { Ammo = MaxAmmo; }
+            if (BulletHolder.IsPowerUp) {HasPowerUp = true; Ammo++; } else { Ammo = MaxAmmo; }
+            if (Ammo > MaxAmmo) {Ammo = MaxAmmo; }
             Destroy(other.gameObject);
         }
     }
