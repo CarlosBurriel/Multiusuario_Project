@@ -17,32 +17,24 @@ public class UI_Manager : MonoBehaviour
 
     public TextMeshProUGUI HealthText;
 
-    //Script de Disparo del Player.
-    public DisparoPlayer Shoot;
-    //Script de Player General
-    public PlayerMovement Player;
+    private HpAndFeedback PlayerHP;
+
+    private ShootBehaviour PlayerAmmo;
+
 
     void Start()
     {
-        //No se si el Start es realmente necesario.
-        #region Inicializacion Balas 
-        Bullet1.enabled = false;
-        Bullet2.enabled = false;
-        Bullet3.enabled = false;
-        Bullet4.enabled = false;
-        Bullet5.enabled = false;
-        #endregion
+        PlayerHP = GetComponentInParent<HpAndFeedback>();
+        PlayerAmmo = GetComponentInParent<ShootBehaviour>();
+        HealthText = transform.GetChild(1).transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>(); 
 
-
-        
+        UpdateAmmoUI();
+        UpdateHpUI();
     }
 
-    void Update()
+    public void UpdateAmmoUI()
     {
-        //Creo que esto se puede hacer en una funcion desde el script del disparo, para no hacerlo en un Update.
-        //Pero prefiero esperarme a tener todos los scripts en una sola escena. 
-        #region Bullet Visual Switch
-        switch (Shoot.ActualAmmo)
+        switch (PlayerAmmo.Ammo)
         {
             case 0:
                 Bullet1.enabled = false;
@@ -96,9 +88,10 @@ public class UI_Manager : MonoBehaviour
                 print("NO BULLETS");
                 break;
         }
-        #endregion
+    }
 
-        HealthText.text = "Health: " + Player.vidasPlayer.ToString();
-
+    public void UpdateHpUI()
+    {
+        HealthText.text = "Health: " + PlayerHP.CurrentHP.ToString();
     }
 }

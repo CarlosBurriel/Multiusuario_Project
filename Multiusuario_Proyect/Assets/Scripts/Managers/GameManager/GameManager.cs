@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,8 +11,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
-        Instance = this;
+        if (Instance == null) {Instance = this; DontDestroyOnLoad(gameObject);} else {Destroy(gameObject);}
     }
 
     public void UpdateGameState(GameState CurrentState)
@@ -23,12 +23,15 @@ public class GameManager : MonoBehaviour
             case GameState.LoginOrRegister:
                 break;
             case GameState.RoundStart:
+                SceneManager.LoadScene("AlTest");
                 break;
             case GameState.RoundEnd:
                 break;
             case GameState.Victory:
+                SceneManager.LoadScene("Winner");
                 break;
             case GameState.Defeat:
+                SceneManager.LoadScene("Loser");
                 break;
         }
     }

@@ -7,6 +7,7 @@ TagManager:
   - Wall
   - AmmoPackage
   - Damage
+  - PowerUp
   layers:
   - Default
   - TransparentFX
