@@ -19,5 +19,7 @@ public class ScriptableBullet : ScriptableObject
 
     public PhysicMaterial PhysicMaterial;
 
+    public GameObject VFX;
+
 
 }

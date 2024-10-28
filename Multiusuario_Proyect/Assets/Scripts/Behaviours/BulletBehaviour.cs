@@ -8,6 +8,8 @@ public class BulletBehaviour : MonoBehaviour
 
     [HideInInspector] public int BulletDamage = 1;
 
+    [HideInInspector] public GameObject VFX;
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Player"))
@@ -27,4 +29,8 @@ public class BulletBehaviour : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        if (VFX) { Instantiate(VFX, transform.position, Quaternion.identity); }
+    }
 }

@@ -29,7 +29,7 @@ public class UI_Manager : MonoBehaviour
         HealthText = transform.GetChild(1).transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>(); 
 
         UpdateAmmoUI();
-        UpdateHpUI();
+        UpdateStartHpUI();
     }
 
     public void UpdateAmmoUI()
@@ -90,6 +90,10 @@ public class UI_Manager : MonoBehaviour
         }
     }
 
+    public void UpdateStartHpUI()
+    {
+        HealthText.text = "Health: " + PlayerHP.MaxHP.ToString();
+    }
     public void UpdateHpUI()
     {
         HealthText.text = "Health: " + PlayerHP.CurrentHP.ToString();

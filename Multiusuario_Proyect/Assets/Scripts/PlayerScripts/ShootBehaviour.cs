@@ -64,9 +64,15 @@ public class ShootBehaviour : MonoBehaviour
             Physics.IgnoreCollision(ThisCollider, Projectile.GetComponent<Collider>());
             if (BulletHolder.PhysicMaterial) { Projectile.GetComponent<Collider>().material = BulletHolder.PhysicMaterial; }
             if (BulletHolder.BulletMaterial) { Projectile.GetComponent<MeshRenderer>().material = BulletHolder.BulletMaterial; }
-            Projectile.GetComponent<BulletBehaviour>().BulletDamage = BulletHolder.BulletDamage;
-            Projectile.GetComponent<BulletBehaviour>().BulletLife = BulletHolder.BulletBounces;
+
+            BulletBehaviour InstBB = Projectile.GetComponent<BulletBehaviour>();
+
+            InstBB.BulletDamage = BulletHolder.BulletDamage;
+            InstBB.BulletLife = BulletHolder.BulletBounces;
+            InstBB.VFX = BulletHolder.VFX;
+
             Projectile.GetComponent<Rigidbody>().velocity = transform.forward * BulletHolder.LaunchSpeed;
+            
             
             if (HasPowerUp) { HasPowerUp = false; BulletHolder = CommonBullet; }
     }
