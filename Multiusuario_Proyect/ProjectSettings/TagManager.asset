@@ -8,6 +8,7 @@ TagManager:
   - AmmoPackage
   - Damage
   - PowerUp
+  - Explosion
   layers:
   - Default
   - TransparentFX

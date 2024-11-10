@@ -25,6 +25,11 @@ public class DummyScript : MonoBehaviour
             CurrentHP -= collision.gameObject.GetComponent<BulletBehaviour>().BulletDamage;
             CheckLife();
         }
+        if (collision.gameObject.CompareTag("Explosion"))
+        {
+            CurrentHP--;
+            CheckLife();
+        }
     }
 
     void CheckLife()

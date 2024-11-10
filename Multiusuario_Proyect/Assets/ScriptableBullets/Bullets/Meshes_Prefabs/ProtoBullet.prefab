@@ -148,3 +148,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BulletLife: 0
   BulletDamage: 0
+  VFX: {fileID: 0}
+  BulletHolder: {fileID: 11400000, guid: e730524b53566f542b9145c459545b76, type: 2}
