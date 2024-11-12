@@ -710,28 +710,6 @@ MonoBehaviour:
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
---- !u!114 &1643623215 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1694001300659687904, guid: fba7ab37a3fd0b04da237e768364e038, type: 3}
-  m_PrefabInstance: {fileID: 1790114776}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48a2e8b8dcfffa24abf11665b217e735, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1643623217 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1037656665219865422, guid: fba7ab37a3fd0b04da237e768364e038, type: 3}
-  m_PrefabInstance: {fileID: 1790114776}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f4a78b5fb1bc5d49a1db52b7772495a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1711916229
 GameObject:
   m_ObjectHideFlags: 0
@@ -882,115 +860,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1763831363}
   m_CullTransparentMesh: 1
---- !u!1001 &1790114776
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1037656665219865422, guid: fba7ab37a3fd0b04da237e768364e038, type: 3}
-      propertyPath: speed
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 1037656665219865422, guid: fba7ab37a3fd0b04da237e768364e038, type: 3}
-      propertyPath: PowerUp
-      value: 
-      objectReference: {fileID: 2259138046563971249, guid: 64e6811169b0b9849b3ed8ae3bcd1f93, type: 3}
-    - target: {fileID: 1694001300659687904, guid: fba7ab37a3fd0b04da237e768364e038, type: 3}
-      propertyPath: poder
-      value: 
-      objectReference: {fileID: 1643623217}
-    - target: {fileID: 1694001300659687904, guid: fba7ab37a3fd0b04da237e768364e038, type: 3}
-      propertyPath: PowerUp
-      value: 
-      objectReference: {fileID: 2259138046563971249, guid: 64e6811169b0b9849b3ed8ae3bcd1f93, type: 3}
-    - target: {fileID: 1694001300659687904, guid: fba7ab37a3fd0b04da237e768364e038, type: 3}
-      propertyPath: CanShoot
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1694001300659687904, guid: fba7ab37a3fd0b04da237e768364e038, type: 3}
-      propertyPath: PowerUpGO
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1694001300659687904, guid: fba7ab37a3fd0b04da237e768364e038, type: 3}
-      propertyPath: AmmoItemGO
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1694001300659687904, guid: fba7ab37a3fd0b04da237e768364e038, type: 3}
-      propertyPath: PowerUpTrigger
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1694001300659687904, guid: fba7ab37a3fd0b04da237e768364e038, type: 3}
-      propertyPath: AmmoItemTrigger
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3910483741845977289, guid: fba7ab37a3fd0b04da237e768364e038, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3910483741845977289, guid: fba7ab37a3fd0b04da237e768364e038, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 9.848079
-      objectReference: {fileID: 0}
-    - target: {fileID: 3910483741845977289, guid: fba7ab37a3fd0b04da237e768364e038, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -1.7364845
-      objectReference: {fileID: 0}
-    - target: {fileID: 5469148118466103024, guid: fba7ab37a3fd0b04da237e768364e038, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -8.17
-      objectReference: {fileID: 0}
-    - target: {fileID: 5469148118466103024, guid: fba7ab37a3fd0b04da237e768364e038, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5469148118466103024, guid: fba7ab37a3fd0b04da237e768364e038, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -24.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 5469148118466103024, guid: fba7ab37a3fd0b04da237e768364e038, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5469148118466103024, guid: fba7ab37a3fd0b04da237e768364e038, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5469148118466103024, guid: fba7ab37a3fd0b04da237e768364e038, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5469148118466103024, guid: fba7ab37a3fd0b04da237e768364e038, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5469148118466103024, guid: fba7ab37a3fd0b04da237e768364e038, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5469148118466103024, guid: fba7ab37a3fd0b04da237e768364e038, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5469148118466103024, guid: fba7ab37a3fd0b04da237e768364e038, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5748264199236422415, guid: fba7ab37a3fd0b04da237e768364e038, type: 3}
-      propertyPath: m_Name
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 7074317065038876891, guid: fba7ab37a3fd0b04da237e768364e038, type: 3}
-      propertyPath: m_UseGravity
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: fba7ab37a3fd0b04da237e768364e038, type: 3}
 --- !u!1 &1823084484
 GameObject:
   m_ObjectHideFlags: 0
@@ -1194,7 +1063,7 @@ MonoBehaviour:
   Bullet3: {fileID: 1081058004}
   Bullet4: {fileID: 462983145}
   Bullet5: {fileID: 1711916231}
-  Shoot: {fileID: 1643623215}
+  HealthText: {fileID: 0}
 --- !u!1 &2140973434
 GameObject:
   m_ObjectHideFlags: 0
@@ -1274,5 +1143,4 @@ CanvasRenderer:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1790114776}
   - {fileID: 708715077}
