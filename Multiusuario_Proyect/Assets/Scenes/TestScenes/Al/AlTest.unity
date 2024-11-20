@@ -357,6 +357,18 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 6609716824469075748, guid: d2f17d1ab0fd4ff4997f74de14e90173, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6609716824469075748, guid: d2f17d1ab0fd4ff4997f74de14e90173, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6609716824469075748, guid: d2f17d1ab0fd4ff4997f74de14e90173, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6609716824469075748, guid: d2f17d1ab0fd4ff4997f74de14e90173, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.43
       objectReference: {fileID: 0}
@@ -394,6 +406,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6609716824469075748, guid: d2f17d1ab0fd4ff4997f74de14e90173, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6609716824469075748, guid: d2f17d1ab0fd4ff4997f74de14e90173, type: 3}
+      propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6695803503257269338, guid: d2f17d1ab0fd4ff4997f74de14e90173, type: 3}
@@ -434,8 +450,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0fe961fa780dfc4da907e56059f8cc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHP: 1
+  MaxHP: 2
   CurrentHP: 0
+  FlashMaterial: {fileID: 2100000, guid: 3950de720e55fb04c86db0ef95ed237f, type: 2}
 --- !u!1 &341956253
 GameObject:
   m_ObjectHideFlags: 0
@@ -1581,8 +1598,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0fe961fa780dfc4da907e56059f8cc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHP: 1
+  MaxHP: 2
   CurrentHP: 0
+  FlashMaterial: {fileID: 2100000, guid: 3950de720e55fb04c86db0ef95ed237f, type: 2}
 --- !u!1001 &1437175402
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1758,8 +1776,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0fe961fa780dfc4da907e56059f8cc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHP: 1
+  MaxHP: 2
   CurrentHP: 0
+  FlashMaterial: {fileID: 2100000, guid: 3950de720e55fb04c86db0ef95ed237f, type: 2}
 --- !u!4 &1885783435 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1f47972a945a0a34e883f2f09d5bf9ac, type: 3}
@@ -2067,6 +2086,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -178.62169
       objectReference: {fileID: 0}
+    - target: {fileID: 5779707292253858673, guid: 64a748bfba55ef94988bdb6281332b3f, type: 3}
+      propertyPath: FlashMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 3950de720e55fb04c86db0ef95ed237f, type: 2}
     - target: {fileID: 6662940116493610947, guid: 64a748bfba55ef94988bdb6281332b3f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -32.83944
