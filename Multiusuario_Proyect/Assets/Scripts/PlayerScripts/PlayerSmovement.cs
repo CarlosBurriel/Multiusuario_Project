@@ -20,6 +20,8 @@ public class PlayerSmovement : MonoBehaviour
 
     #endregion
 
+    private PlayerAnimHandler playerAnimHandler;
+
     #region InputHandling
     private PlayerControls ThisPlayerInputs;
 
@@ -40,6 +42,8 @@ public class PlayerSmovement : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        playerAnimHandler = GetComponentInChildren<PlayerAnimHandler>();
     }
 
     private void FixedUpdate()
@@ -51,6 +55,9 @@ public class PlayerSmovement : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context)
     {
         MoveDirection = context.ReadValue<Vector3>();
+
+        if ( MoveDirection == Vector3.zero && playerAnimHandler.state != PlayerAnimHandler.PlayerState.ATTACK ) {playerAnimHandler.UpdateState(PlayerAnimHandler.PlayerState.IDLE); } 
+        else if (playerAnimHandler.state != PlayerAnimHandler.PlayerState.ATTACK) {playerAnimHandler.UpdateState(PlayerAnimHandler.PlayerState.MOVEMENT); }
     }
 
     public void MoveAndRotate()

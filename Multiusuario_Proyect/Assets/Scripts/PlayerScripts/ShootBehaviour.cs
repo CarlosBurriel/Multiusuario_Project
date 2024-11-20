@@ -11,6 +11,8 @@ public class ShootBehaviour : MonoBehaviour
     public bool HasPowerUp = false;
 
     public ScriptableBullet CommonBullet;
+
+    public GameObject ShootVFX;
     #endregion
 
     #region Private Variables
@@ -21,9 +23,13 @@ public class ShootBehaviour : MonoBehaviour
     private UI_Manager UI;
     #endregion
 
+    private PlayerAnimHandler playerAnimHandler;
+
     private void Start()
     {
         UI = transform.GetChild(2).gameObject.GetComponent<UI_Manager>();
+
+        playerAnimHandler = GetComponentInChildren<PlayerAnimHandler>();
 
         ThisCollider = GetComponent<Collider>();
         Canon = transform.GetChild(0);
@@ -51,6 +57,8 @@ public class ShootBehaviour : MonoBehaviour
     {
         if (Ammo > 0)
         {
+            Instantiate(ShootVFX, Canon.transform.position, Canon.transform.rotation);
+            playerAnimHandler.UpdateState(PlayerAnimHandler.PlayerState.ATTACK);
             Ammo--;
             OnProjectileSpawn();
         }
