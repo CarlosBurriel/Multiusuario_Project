@@ -13,11 +13,13 @@ public class RegisterManager : MonoBehaviour
 
     public void StartRegister()
     {
+        print("hola");
         StartCoroutine(Register());
     }
 
     IEnumerator Register()
     {
+        
         WWWForm form = new WWWForm();
         form.AddField("username", usernameField.text);
         form.AddField("password", passwordField.text);
