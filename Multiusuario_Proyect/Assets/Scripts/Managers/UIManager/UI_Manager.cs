@@ -29,6 +29,8 @@ public class UI_Manager : MonoBehaviour
 
         PlayerHP.CurrentHP.OnValueChanged += UpdateHpUI;
 
+        PlayerHP.CurrentHP.Value = PlayerHP.MaxHP;
+
         PlayerAmmo.Ammo.OnValueChanged += UpdateAmmoUI;
 
     }

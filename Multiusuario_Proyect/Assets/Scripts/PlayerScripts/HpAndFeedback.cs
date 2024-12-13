@@ -35,8 +35,8 @@ public class HpAndFeedback : NetworkBehaviour
 
     public void OnCollisionEnter(Collision collision)
     {
-        
-        if (collision.gameObject.CompareTag("Damage"))
+        if(!IsServer) return;
+        if (collision.gameObject.CompareTag("Damage") && GetComponent<NetworkObject>().OwnerClientId != collision.gameObject.GetComponent<NetworkObject>().OwnerClientId)
         {
             OnHitFeedback();
             CurrentHP.Value -= collision.gameObject.GetComponent<BulletBehaviour>().BulletDamage;
@@ -67,8 +67,9 @@ public class HpAndFeedback : NetworkBehaviour
         if (CurrentHP.Value <= 0)
         {
             playerAnimHandler.UpdateState(PlayerAnimHandler.PlayerState.DEATH);
+            GetComponent<PlayerSmovement>().enabled = false;
            //Destroy(gameObject);
-           GameManager.Instance.UpdateGameState(GameManager.GameState.Defeat);
+           //GameManager.Instance.UpdateGameState(GameManager.GameState.Defeat);
         }
     }
 

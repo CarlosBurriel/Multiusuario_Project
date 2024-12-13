@@ -14,12 +14,12 @@ public class ShootBehaviour : NetworkBehaviour
 
     public ScriptableBullet CommonBullet;
 
-    public GameObject ShootVFX;
+    private ParticleSystem ShootVFX;
     #endregion
 
     #region Private Variables
     private ScriptableBullet BulletHolder;
-    private Transform Canon;
+    private GameObject Canon;
     private Collider ThisCollider;
 
     private UI_Manager UI;
@@ -49,12 +49,12 @@ public class ShootBehaviour : NetworkBehaviour
 
     private void Awake()
     {
-        
-
         playerAnimHandler = GetComponentInChildren<PlayerAnimHandler>();
 
         ThisCollider = GetComponent<Collider>();
-        Canon = transform.GetChild(0);
+        Canon = transform.GetChild(0).gameObject;
+        ShootVFX = Canon.GetComponent<ParticleSystem>();
+        Canon.SetActive(true);
         BulletHolder = CommonBullet;
     } 
 
@@ -73,28 +73,11 @@ public class ShootBehaviour : NetworkBehaviour
 
     public void OnProjectileSpawn()
     {
-            GameObject VFXNetCode = Instantiate(ShootVFX, Canon.transform.position, Canon.transform.rotation);
-            VFXNetCode.GetComponent<NetworkObject>().Spawn();
+            ShootVFX.Play();
             playerAnimHandler.UpdateState(PlayerAnimHandler.PlayerState.ATTACK);
             Ammo.Value--;
 
-
-            GameObject Projectile = Instantiate(BulletHolder.BulletType, Canon.transform.position, Canon.transform.rotation);
-            Projectile.GetComponent<NetworkObject>().Spawn();
-
-
-            Physics.IgnoreCollision(ThisCollider, Projectile.GetComponent<Collider>());
-            if (BulletHolder.PhysicMaterial) { Projectile.GetComponent<Collider>().material = BulletHolder.PhysicMaterial; }
-            if (BulletHolder.BulletMaterial) { Projectile.GetComponent<MeshRenderer>().material = BulletHolder.BulletMaterial; }
-
-            BulletBehaviour InstBB = Projectile.GetComponent<BulletBehaviour>();
-
-            InstBB.BulletDamage = BulletHolder.BulletDamage;
-            InstBB.BulletLife = BulletHolder.BulletBounces;
-            InstBB.VFX = BulletHolder.VFX;
-
-            Projectile.GetComponent<Rigidbody>().velocity = transform.forward * BulletHolder.LaunchSpeed;
-            
+            SetBulletServerRPC();            
             
             if (HasPowerUp) { HasPowerUp = false; BulletHolder = CommonBullet; }
     }
@@ -105,17 +88,9 @@ public class ShootBehaviour : NetworkBehaviour
         OnProjectileSpawn();
     }
     #endregion
-    public void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("AmmoPackage"))
-        {
-            BulletHolder = other.GetComponent<AmmoPackageBehaviour>().ThisPackageBullet;
-            UpdateAmmoServerRPC();
-            DespawnAmmoPackageServerRPC(other.gameObject);
-        }
-    }
+   
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     public void UpdateAmmoServerRPC()
     {
         if (BulletHolder.IsPowerUp) { HasPowerUp = true; Ammo.Value++; } else { Ammo.Value = MaxAmmo; }
@@ -128,6 +103,35 @@ public class ShootBehaviour : NetworkBehaviour
         if(g.TryGet(out NetworkObject other))
         {
             other.gameObject.GetComponent<NetworkObject>().Despawn(true);
+        }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void SetBulletServerRPC(ServerRpcParams serverRpcParams = default)
+    {
+            GameObject Projectile = Instantiate(BulletHolder.BulletType, Canon.transform.position, Canon.transform.rotation);
+            Projectile.GetComponent<NetworkObject>().SpawnWithOwnership(serverRpcParams.Receive.SenderClientId, true);
+
+            Physics.IgnoreCollision(ThisCollider, Projectile.GetComponent<Collider>());
+            if (BulletHolder.PhysicMaterial) { Projectile.GetComponent<Collider>().material = BulletHolder.PhysicMaterial; }
+            if (BulletHolder.BulletMaterial) { Projectile.GetComponent<MeshRenderer>().material = BulletHolder.BulletMaterial; }
+
+            BulletBehaviour InstBB = Projectile.GetComponent<BulletBehaviour>();
+
+            InstBB.BulletDamage = BulletHolder.BulletDamage;
+            InstBB.BulletLife = BulletHolder.BulletBounces;
+            InstBB.VFX = BulletHolder.VFX;
+
+            Projectile.GetComponent<Rigidbody>().velocity = transform.forward * BulletHolder.LaunchSpeed;
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("AmmoPackage"))
+        {
+            BulletHolder = other.GetComponent<AmmoPackageBehaviour>().ThisPackageBullet;
+            UpdateAmmoServerRPC();
+            DespawnAmmoPackageServerRPC(other.gameObject);
         }
     }
 }
