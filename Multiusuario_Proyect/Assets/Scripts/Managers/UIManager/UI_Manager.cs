@@ -29,9 +29,12 @@ public class UI_Manager : MonoBehaviour
 
         PlayerHP.CurrentHP.OnValueChanged += UpdateHpUI;
 
-        PlayerHP.CurrentHP.Value = PlayerHP.MaxHP;
+        UpdateHpUI(0, PlayerHP.MaxHP);
 
         PlayerAmmo.Ammo.OnValueChanged += UpdateAmmoUI;
+
+        UpdateAmmoUI(0, PlayerAmmo.MaxAmmo);
+
 
     }
 
@@ -97,5 +100,6 @@ public class UI_Manager : MonoBehaviour
     public void UpdateHpUI(int previousValue, int newValue)
     {
         HealthText.text = "Health: " + newValue.ToString();
+        PlayerHP.CheckLifeServerRPC(previousValue, newValue);
     }
 }

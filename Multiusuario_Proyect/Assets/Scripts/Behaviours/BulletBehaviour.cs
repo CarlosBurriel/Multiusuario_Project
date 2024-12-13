@@ -5,28 +5,35 @@ using UnityEngine;
 
 public class BulletBehaviour : NetworkBehaviour
 {
-    [HideInInspector] public int BulletLife;
+    public NetworkVariable<int> BulletLife = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     [HideInInspector] public int BulletDamage = 1;
 
     [HideInInspector] public GameObject VFX;
 
-    private void OnCollisionEnter(Collision collision)
+    public override void OnNetworkSpawn()
     {
-        if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Player"))
-        {
-            BulletLife--;
-            CheckLife();
-        }
+        BulletLife.OnValueChanged += BulletLifeLoseServerRPC;
+    }
+   
 
-        
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Player"))
+        {
+            BulletLife.Value--;
+        }
     }
 
-    void CheckLife()
+    
+
+    [ServerRpc(RequireOwnership = false)]
+    void BulletLifeLoseServerRPC(int previousValue, int newValue)
     {
-        if (BulletLife < 0)
+       
+        if (newValue < 0)
         {
-            Destroy(gameObject);
+            gameObject.GetComponent<NetworkObject>().Despawn();
         }
     }
 

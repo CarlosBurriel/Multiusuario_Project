@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class HpAndFeedback : NetworkBehaviour
 {
     public int MaxHP;
-    [SerializeField]public NetworkVariable<int> CurrentHP = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+    [SerializeField]public NetworkVariable<int> CurrentHP = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     public Material FlashMaterial;
 
@@ -27,22 +27,30 @@ public class HpAndFeedback : NetworkBehaviour
 
         Render = GetComponentInChildren<SkinnedMeshRenderer>();
         OwnMaterial = Render.material;
-
+ 
         CurrentHP.Value = MaxHP;
 
+        
     }
 
 
-    public void OnCollisionEnter(Collision collision)
+
+    private void OnCollisionEnter(Collision other)
     {
-        if(!IsServer) return;
-        if (collision.gameObject.CompareTag("Damage") && GetComponent<NetworkObject>().OwnerClientId != collision.gameObject.GetComponent<NetworkObject>().OwnerClientId)
+        if (other.gameObject.CompareTag("Damage"))
         {
             OnHitFeedback();
-            CurrentHP.Value -= collision.gameObject.GetComponent<BulletBehaviour>().BulletDamage;
+            TakeDamage(other);
         }
     }
 
+ 
+    public void TakeDamage(Collision collision)
+    {
+        
+            CurrentHP.Value -= collision.gameObject.GetComponent<BulletBehaviour>().BulletDamage;
+        
+    }
     public void OnHitFeedback()
     {
         SizeChange();
@@ -51,24 +59,24 @@ public class HpAndFeedback : NetworkBehaviour
 
     public void SizeChange()
     {
-        transform.DOPunchScale(transform.localScale * Random.Range(1, 1.5f), 0.5f);
+        transform.DOPunchScale(transform.localScale * Random.Range(1, 1.3f), 0.5f);
     }
 
     public IEnumerator Flash()
     {
         Render.material = FlashMaterial;   
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
         Render.material = OwnMaterial;
     }
 
-    void CheckLife()
+    [ServerRpc(RequireOwnership = false)]
+    public void CheckLifeServerRPC(int previousValue, int newValue)
     {
-
-        if (CurrentHP.Value <= 0)
+        if (newValue <= 0)
         {
             playerAnimHandler.UpdateState(PlayerAnimHandler.PlayerState.DEATH);
             GetComponent<PlayerSmovement>().enabled = false;
-           //Destroy(gameObject);
+            gameObject.GetComponent<NetworkObject>().Despawn();
            //GameManager.Instance.UpdateGameState(GameManager.GameState.Defeat);
         }
     }

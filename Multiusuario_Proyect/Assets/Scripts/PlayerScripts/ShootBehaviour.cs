@@ -22,7 +22,7 @@ public class ShootBehaviour : NetworkBehaviour
     private GameObject Canon;
     private Collider ThisCollider;
 
-    private UI_Manager UI;
+
     #endregion
 
     private PlayerControls ThisPlayerInputs;
@@ -109,20 +109,20 @@ public class ShootBehaviour : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void SetBulletServerRPC(ServerRpcParams serverRpcParams = default)
     {
-            GameObject Projectile = Instantiate(BulletHolder.BulletType, Canon.transform.position, Canon.transform.rotation);
-            Projectile.GetComponent<NetworkObject>().SpawnWithOwnership(serverRpcParams.Receive.SenderClientId, true);
+        GameObject Projectile = Instantiate(BulletHolder.BulletType, Canon.transform.position, Canon.transform.rotation);
+        Projectile.GetComponent<NetworkObject>().SpawnWithOwnership(serverRpcParams.Receive.SenderClientId, true);
 
-            Physics.IgnoreCollision(ThisCollider, Projectile.GetComponent<Collider>());
-            if (BulletHolder.PhysicMaterial) { Projectile.GetComponent<Collider>().material = BulletHolder.PhysicMaterial; }
-            if (BulletHolder.BulletMaterial) { Projectile.GetComponent<MeshRenderer>().material = BulletHolder.BulletMaterial; }
+        Physics.IgnoreCollision(ThisCollider, Projectile.GetComponent<Collider>());
+        if (BulletHolder.PhysicMaterial) { Projectile.GetComponent<Collider>().material = BulletHolder.PhysicMaterial; }
+        if (BulletHolder.BulletMaterial) { Projectile.GetComponent<MeshRenderer>().material = BulletHolder.BulletMaterial; }
 
-            BulletBehaviour InstBB = Projectile.GetComponent<BulletBehaviour>();
+        BulletBehaviour InstBB = Projectile.GetComponent<BulletBehaviour>();
 
-            InstBB.BulletDamage = BulletHolder.BulletDamage;
-            InstBB.BulletLife = BulletHolder.BulletBounces;
-            InstBB.VFX = BulletHolder.VFX;
+        InstBB.BulletDamage = BulletHolder.BulletDamage;
+        InstBB.BulletLife.Value = BulletHolder.BulletBounces;
+        InstBB.VFX = BulletHolder.VFX;
 
-            Projectile.GetComponent<Rigidbody>().velocity = transform.forward * BulletHolder.LaunchSpeed;
+        Projectile.GetComponent<Rigidbody>().velocity = transform.forward * BulletHolder.LaunchSpeed;
     }
 
     public void OnTriggerEnter(Collider other)

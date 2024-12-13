@@ -564,7 +564,7 @@ GameObject:
   - component: {fileID: 4804203685091249428}
   - component: {fileID: 8361802111411123050}
   - component: {fileID: 3826684639939507739}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -690,7 +690,7 @@ GameObject:
   - component: {fileID: 7545522779264664532}
   - component: {fileID: 3637707839113722074}
   - component: {fileID: 3378060806562263944}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Virtual Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -883,9 +883,9 @@ GameObject:
   - component: {fileID: 1422551042493060743}
   - component: {fileID: 2806259599589812819}
   - component: {fileID: 7917183149262257335}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: NewPlayer
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1114,7 +1114,7 @@ GameObject:
   - component: {fileID: 6484204683608596829}
   - component: {fileID: 2868171342012592182}
   - component: {fileID: 6273631672529957906}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2271,11 +2271,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1429954232896169630, guid: 83036083a4ebcd34f98131bd3cf6f4d2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.19300008
+      value: 0.63
       objectReference: {fileID: 0}
     - target: {fileID: 1429954232896169630, guid: 83036083a4ebcd34f98131bd3cf6f4d2, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.5910003
+      value: 2.18
       objectReference: {fileID: 0}
     - target: {fileID: 1429954232896169630, guid: 83036083a4ebcd34f98131bd3cf6f4d2, type: 3}
       propertyPath: m_LocalRotation.w
