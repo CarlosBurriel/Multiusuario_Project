@@ -791,8 +791,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 108016279035510845}
-  - component: {fileID: 4844024659636115661}
   - component: {fileID: 6317425855127972234}
+  - component: {fileID: 7424655078957313824}
   - component: {fileID: 6414603660186113830}
   m_Layer: 0
   m_Name: PlayerModel
@@ -818,27 +818,6 @@ Transform:
   - {fileID: 7285160216863876721}
   m_Father: {fileID: 3449821680785823664}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &4844024659636115661
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3933347624741090186}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: eae5727004468be4e8e12ec5c90abccd, type: 3}
-  m_Controller: {fileID: 9100000, guid: 5f126a31b19dfbe41921d35ba25ca184, type: 2}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &6317425855127972234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -852,6 +831,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
+--- !u!95 &7424655078957313824
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3933347624741090186}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 0b04b4ee27b36df4c94e4df3ea384a9f, type: 3}
+  m_Controller: {fileID: 9100000, guid: 5f126a31b19dfbe41921d35ba25ca184, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &6414603660186113830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -865,7 +865,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TransitionStateInfoList: []
-  m_Animator: {fileID: 4844024659636115661}
+  m_Animator: {fileID: 7424655078957313824}
 --- !u!1 &4555721202944329908
 GameObject:
   m_ObjectHideFlags: 0
