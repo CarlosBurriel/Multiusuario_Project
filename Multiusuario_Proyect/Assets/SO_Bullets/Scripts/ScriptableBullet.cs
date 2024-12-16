@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "CommonBullet", menuName = "BulletScriptable")]
@@ -15,7 +16,7 @@ public class ScriptableBullet : ScriptableObject
 
     public GameObject BulletType;
 
-    public Material BulletMaterial;
+    public NetworkVariable<Material> BulletMaterial = new NetworkVariable<Material>(null, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     public PhysicMaterial PhysicMaterial;
 

@@ -13,6 +13,7 @@ public class ShootBehaviour : NetworkBehaviour
     public bool HasPowerUp = false;
 
     public ScriptableBullet CommonBullet;
+    public NetworkVariable<Material> BulletMaterial = new NetworkVariable<Material>(null, NetworkVariableReadPermission.Owner, NetworkVariableWritePermission.Server);
 
     private ParticleSystem ShootVFX;
     #endregion
@@ -56,6 +57,7 @@ public class ShootBehaviour : NetworkBehaviour
         ShootVFX = Canon.GetComponent<ParticleSystem>();
         Canon.SetActive(true);
         BulletHolder = CommonBullet;
+        BulletMaterial = CommonBullet.BulletMaterial;
     } 
 
 
@@ -114,7 +116,7 @@ public class ShootBehaviour : NetworkBehaviour
 
         Physics.IgnoreCollision(ThisCollider, Projectile.GetComponent<Collider>());
         if (BulletHolder.PhysicMaterial) { Projectile.GetComponent<Collider>().material = BulletHolder.PhysicMaterial; }
-        if (BulletHolder.BulletMaterial) { Projectile.GetComponent<MeshRenderer>().material = BulletHolder.BulletMaterial; }
+        if (BulletHolder.BulletMaterial.Value) { Projectile.GetComponent<MeshRenderer>().material = BulletHolder.BulletMaterial.Value; }
 
         BulletBehaviour InstBB = Projectile.GetComponent<BulletBehaviour>();
 
