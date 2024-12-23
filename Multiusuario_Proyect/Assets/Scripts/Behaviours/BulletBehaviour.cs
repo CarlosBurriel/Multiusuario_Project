@@ -7,13 +7,19 @@ public class BulletBehaviour : NetworkBehaviour
 {
     public NetworkVariable<int> BulletLife = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
-    [HideInInspector] public int BulletDamage = 1;
+    public NetworkVariable<int> BulletDamage = new NetworkVariable<int>(1, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
-    [HideInInspector] public GameObject VFX;
+    public float BulletSpeed = 1;
+
+    public bool IsPowerUp;
+
+    public GameObject VFX;
+
 
     public override void OnNetworkSpawn()
     {
         BulletLife.OnValueChanged += BulletLifeLoseServerRPC;
+        GetComponent<Rigidbody>().velocity = transform.forward * BulletSpeed;
     }
    
 

@@ -47,8 +47,8 @@ public class HpAndFeedback : NetworkBehaviour
  
     public void TakeDamage(Collision collision)
     {
-        
-            CurrentHP.Value -= collision.gameObject.GetComponent<BulletBehaviour>().BulletDamage;
+
+        CurrentHP.Value -= collision.gameObject.GetComponent<BulletBehaviour>().BulletDamage.Value;
         
     }
     public void OnHitFeedback()

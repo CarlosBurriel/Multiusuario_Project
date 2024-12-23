@@ -30,7 +30,7 @@ public class DummyScript : NetworkBehaviour
         if (collision.gameObject.CompareTag("Damage"))
         {
             OnHitFeedback();
-            CurrentHP -= collision.gameObject.GetComponent<BulletBehaviour>().BulletDamage;
+            CurrentHP -= collision.gameObject.GetComponent<BulletBehaviour>().BulletDamage.Value;
             CheckLife();
         }
         if (collision.gameObject.CompareTag("Explosion"))

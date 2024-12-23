@@ -2,9 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
-using static ShootBehaviour;
 
-[CreateAssetMenu(fileName = "CommonBullet", menuName = "BulletScriptable")]
 public class ScriptableBullet : MonoBehaviour
 {
     public float LaunchSpeed;
@@ -23,10 +21,4 @@ public class ScriptableBullet : MonoBehaviour
 
     public GameObject VFX;
 
-    public struct BMaterial : INetworkSerializable
-    {
-        public Color bullmat;
-
-        public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter { serializer.SerializeValue(ref bullmat); }
-    }
 }

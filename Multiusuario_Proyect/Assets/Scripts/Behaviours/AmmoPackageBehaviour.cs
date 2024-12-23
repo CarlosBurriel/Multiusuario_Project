@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class AmmoPackageBehaviour : MonoBehaviour
 {
-    public ScriptableBullet ThisPackageBullet;
+    public GameObject ThisPackageBullet;
     
 }
