@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4304770112493953915}
   - component: {fileID: 4308810721612864692}
   - component: {fileID: -7950389667707199990}
+  - component: {fileID: -1747253364113821528}
   m_Layer: 0
   m_Name: PowerUP Boom
   m_TagString: AmmoPackage
@@ -120,7 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a25bb41c88926dd4395218e73b28dbdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ThisPackageBullet: {fileID: 11400000, guid: 89f54cc8d6a8ce3498723f3d3b830247, type: 2}
+  ThisPackageBullet: {fileID: -1747253364113821528}
 --- !u!114 &4308810721612864692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,3 +174,23 @@ MonoBehaviour:
   InLocalSpace: 0
   Interpolate: 1
   SlerpPosition: 0
+--- !u!114 &-1747253364113821528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8337878511781529125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaaac0674ec41974396cd94459ddf271, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LaunchSpeed: 25
+  BulletDamage: 0
+  BulletBounces: 0
+  IsPowerUp: 1
+  BulletType: {fileID: 6347236056145011887, guid: 3269f00597bac784c97fa4285c924d53, type: 3}
+  Bulletmaterial: {fileID: 2100000, guid: 7bb6dad068bb6904f9fec0a7bd0b8604, type: 2}
+  PhysicMaterial: {fileID: 0}
+  VFX: {fileID: 4593184484909914552, guid: 2e1e9506f5904a64b81744324fb7cd50, type: 3}

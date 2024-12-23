@@ -970,7 +970,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2764213938
+  GlobalObjectIdHash: 3246697441
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -1026,7 +1026,9 @@ MonoBehaviour:
     m_InternalValue: 5
   MaxAmmo: 5
   HasPowerUp: 0
-  CommonBullet: {fileID: 11400000, guid: e730524b53566f542b9145c459545b76, type: 2}
+  CommonBullet: {fileID: 8645350101410230677, guid: d2f17d1ab0fd4ff4997f74de14e90173, type: 3}
+  BulletMaterial:
+    m_InternalValue: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &2806259599589812819
 MonoBehaviour:
   m_ObjectHideFlags: 0

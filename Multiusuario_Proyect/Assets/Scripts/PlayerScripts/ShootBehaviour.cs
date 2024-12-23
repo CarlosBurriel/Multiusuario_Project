@@ -13,7 +13,7 @@ public class ShootBehaviour : NetworkBehaviour
     public bool HasPowerUp = false;
 
     public ScriptableBullet CommonBullet;
-    public NetworkVariable<Material> BulletMaterial = new NetworkVariable<Material>(null, NetworkVariableReadPermission.Owner, NetworkVariableWritePermission.Server);
+    public Material BulletMaterial;
 
     private ParticleSystem ShootVFX;
     #endregion
@@ -29,7 +29,13 @@ public class ShootBehaviour : NetworkBehaviour
     private PlayerControls ThisPlayerInputs;
 
     private PlayerAnimHandler playerAnimHandler;
-       
+     
+    public struct BMaterial : INetworkSerializable
+    {
+        public Color bullmat;
+
+        public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter { serializer.SerializeValue(ref bullmat); }
+    }
 
     public override void OnNetworkSpawn()
     {
@@ -57,7 +63,8 @@ public class ShootBehaviour : NetworkBehaviour
         ShootVFX = Canon.GetComponent<ParticleSystem>();
         Canon.SetActive(true);
         BulletHolder = CommonBullet;
-        BulletMaterial = CommonBullet.BulletMaterial;
+        BulletMaterial = CommonBullet.Bulletmaterial;
+        //print(BulletMaterial);
     } 
 
 
@@ -116,7 +123,7 @@ public class ShootBehaviour : NetworkBehaviour
 
         Physics.IgnoreCollision(ThisCollider, Projectile.GetComponent<Collider>());
         if (BulletHolder.PhysicMaterial) { Projectile.GetComponent<Collider>().material = BulletHolder.PhysicMaterial; }
-        if (BulletHolder.BulletMaterial.Value) { Projectile.GetComponent<MeshRenderer>().material = BulletHolder.BulletMaterial.Value; }
+        if (BulletMaterial) { Projectile.GetComponent<MeshRenderer>().material = CommonBullet.Bulletmaterial; }
 
         BulletBehaviour InstBB = Projectile.GetComponent<BulletBehaviour>();
 
