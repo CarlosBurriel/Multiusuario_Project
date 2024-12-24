@@ -15,6 +15,7 @@ public class BulletBehaviour : NetworkBehaviour
 
     public GameObject VFX;
 
+    public ShootBehaviour ShootBehaviour;
 
     public override void OnNetworkSpawn()
     {

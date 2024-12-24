@@ -3,7 +3,9 @@ guid: 2cc75e5d409a2fd43b8ffb1ec33d8456
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - CommonBullet: {fileID: 6347236056145011887, guid: d4170f0c07654af4689dfc16a9aeb239, type: 3}
+  - ShootVFX: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -11,6 +11,7 @@ public class ShootBehaviour : NetworkBehaviour
     public NetworkVariable<int> Ammo = new NetworkVariable<int>(0 ,NetworkVariableReadPermission.Owner, NetworkVariableWritePermission.Server);
     public int MaxAmmo = 5;
     public bool HasPowerUp = false;
+    public GameObject Canon;
 
     public GameObject CommonBullet;
 
@@ -19,7 +20,7 @@ public class ShootBehaviour : NetworkBehaviour
 
     #region Private Variables
     private GameObject BulletHolder;
-    private GameObject Canon;
+    
     private Collider ThisCollider;
 
 
@@ -117,10 +118,10 @@ public class ShootBehaviour : NetworkBehaviour
     public void SetBulletServerRPC(ServerRpcParams serverRpcParams = default)
     {
         GameObject Projectile = Instantiate(BulletHolder, Canon.transform.position, Canon.transform.rotation);
+        Debug.Log(Projectile);
         Projectile.GetComponent<NetworkObject>().SpawnWithOwnership(serverRpcParams.Receive.SenderClientId, true);
 
         Physics.IgnoreCollision(ThisCollider, Projectile.GetComponent<Collider>());
-
     }
 
     public void OnTriggerEnter(Collider other)
