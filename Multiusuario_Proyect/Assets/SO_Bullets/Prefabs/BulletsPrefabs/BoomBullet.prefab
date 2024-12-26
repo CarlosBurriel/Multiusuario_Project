@@ -129,7 +129,7 @@ MonoBehaviour:
   ActiveSceneSynchronization: 0
   SceneMigrationSynchronization: 1
   SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
+  DontDestroyWithOwner: 1
   AutoObjectParentSync: 1
 --- !u!114 &4502107043966420256
 MonoBehaviour:
@@ -146,7 +146,7 @@ MonoBehaviour:
   BulletLife:
     m_InternalValue: 1
   BulletDamage:
-    m_InternalValue: 0
+    m_InternalValue: 1
   BulletSpeed: 1
   IsPowerUp: 1
   VFX: {fileID: 4593184484909914552, guid: 2e1e9506f5904a64b81744324fb7cd50, type: 3}

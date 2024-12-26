@@ -10,7 +10,8 @@ public class ShootBehaviour : NetworkBehaviour
     #region Public Variables
     public NetworkVariable<int> Ammo = new NetworkVariable<int>(0 ,NetworkVariableReadPermission.Owner, NetworkVariableWritePermission.Server);
     public int MaxAmmo = 5;
-    public bool HasPowerUp = false;
+    public NetworkVariable<bool> HasPowerUp = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+   // public bool HasPowerUp = false;
     public GameObject Canon;
 
     public GameObject CommonBullet;
@@ -87,7 +88,7 @@ public class ShootBehaviour : NetworkBehaviour
 
             SetBulletServerRPC();            
             
-            if (HasPowerUp) { HasPowerUp = false; BulletHolder = CommonBullet; }
+            if (HasPowerUp.Value) { HasPowerUp.Value = false; BulletHolder = CommonBullet; }
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -101,7 +102,7 @@ public class ShootBehaviour : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void UpdateAmmoServerRPC()
     {
-        if (BulletHolder.GetComponent<BulletBehaviour>().IsPowerUp) { HasPowerUp = true; Ammo.Value++; } else { Ammo.Value = MaxAmmo; }
+        if (BulletHolder.GetComponent<BulletBehaviour>().IsPowerUp) { HasPowerUp.Value = true; Ammo.Value++; } else { Ammo.Value = MaxAmmo; }
         if (Ammo.Value > MaxAmmo) { Ammo.Value = MaxAmmo; }
     }
 

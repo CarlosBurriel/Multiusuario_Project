@@ -148,7 +148,7 @@ MonoBehaviour:
   BulletDamage:
     m_InternalValue: 1
   BulletSpeed: 1
-  IsPowerUp: 0
+  IsPowerUp: 1
   VFX: {fileID: 8771972552311404799, guid: bbf9e36a48d6c5648a13889afab076fd, type: 3}
   ShootBehaviour: {fileID: 1422551042493060743, guid: 64a748bfba55ef94988bdb6281332b3f, type: 3}
 --- !u!54 &9022773403202102472
