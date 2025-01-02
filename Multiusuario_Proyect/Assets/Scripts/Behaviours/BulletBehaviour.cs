@@ -20,7 +20,7 @@ public class BulletBehaviour : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         BulletLife.OnValueChanged += BulletLifeLoseServerRPC;
-        GetComponent<Rigidbody>().velocity = transform.forward * BulletSpeed;
+        
     }
    
 
@@ -28,11 +28,15 @@ public class BulletBehaviour : NetworkBehaviour
     {
         if (other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Player"))
         {
-            BulletLife.Value--;
+            LifeLoseBulletServerRPC();
         }
     }
 
-    
+    [ServerRpc(RequireOwnership = false)]
+    public void LifeLoseBulletServerRPC()
+    {    
+        BulletLife.Value--;
+    }
 
     [ServerRpc(RequireOwnership = false)]
     void BulletLifeLoseServerRPC(int previousValue, int newValue)

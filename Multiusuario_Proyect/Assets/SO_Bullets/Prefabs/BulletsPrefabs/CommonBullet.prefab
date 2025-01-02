@@ -15,8 +15,8 @@ GameObject:
   - component: {fileID: 3977160644117884675}
   - component: {fileID: -4865579860778401022}
   - component: {fileID: 9022773403202102472}
-  - component: {fileID: -536019375463197702}
-  - component: {fileID: -9188484744336294592}
+  - component: {fileID: -3032162940084367106}
+  - component: {fileID: 4248376038464594146}
   m_Layer: 0
   m_Name: CommonBullet
   m_TagString: Damage
@@ -147,9 +147,9 @@ MonoBehaviour:
     m_InternalValue: 0
   BulletDamage:
     m_InternalValue: 1
-  BulletSpeed: 1
+  BulletSpeed: 10
   IsPowerUp: 0
-  VFX: {fileID: 1590415177872986601, guid: acdb90624a404aa438447006f1026065, type: 3}
+  VFX: {fileID: 8771972552311404799, guid: bbf9e36a48d6c5648a13889afab076fd, type: 3}
   ShootBehaviour: {fileID: 1422551042493060743, guid: 64a748bfba55ef94988bdb6281332b3f, type: 3}
 --- !u!54 &9022773403202102472
 Rigidbody:
@@ -173,12 +173,12 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
---- !u!114 &-536019375463197702
+--- !u!114 &-3032162940084367106
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -187,7 +187,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6347236056145011887}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df2868252ab5c4d1da357e8f11f1b524, type: 3}
+  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   UseUnreliableDeltas: 0
@@ -209,7 +209,7 @@ MonoBehaviour:
   InLocalSpace: 0
   Interpolate: 1
   SlerpPosition: 0
---- !u!114 &-9188484744336294592
+--- !u!114 &4248376038464594146
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

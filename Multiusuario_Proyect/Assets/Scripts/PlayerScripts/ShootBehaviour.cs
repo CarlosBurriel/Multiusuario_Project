@@ -20,7 +20,7 @@ public class ShootBehaviour : NetworkBehaviour
     #endregion
 
     #region Private Variables
-    private GameObject BulletHolder;
+    public GameObject BulletHolder;
     
     private Collider ThisCollider;
 
@@ -119,8 +119,9 @@ public class ShootBehaviour : NetworkBehaviour
     public void SetBulletServerRPC(ServerRpcParams serverRpcParams = default)
     {
         GameObject Projectile = Instantiate(BulletHolder, Canon.transform.position, Canon.transform.rotation);
-        Debug.Log(Projectile);
+        if (HasPowerUp.Value) HasPowerUp.Value = false; BulletHolder = CommonBullet;
         Projectile.GetComponent<NetworkObject>().SpawnWithOwnership(serverRpcParams.Receive.SenderClientId, true);
+        Projectile.GetComponent<Rigidbody>().velocity = transform.forward * Projectile.GetComponent<BulletBehaviour>().BulletSpeed;
 
         Physics.IgnoreCollision(ThisCollider, Projectile.GetComponent<Collider>());
     }
@@ -129,9 +130,19 @@ public class ShootBehaviour : NetworkBehaviour
     {
         if (other.gameObject.CompareTag("AmmoPackage"))
         {
-            BulletHolder = other.GetComponent<AmmoPackageBehaviour>().ThisPackageBullet;
+            ChangeBulletServerRPC(other.gameObject);
             UpdateAmmoServerRPC();
             DespawnAmmoPackageServerRPC(other.gameObject);
         }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void ChangeBulletServerRPC(NetworkObjectReference g)
+    {
+        if(g.TryGet(out NetworkObject other))
+        {
+            BulletHolder = other.GetComponent<AmmoPackageBehaviour>().ThisPackageBullet;
+        }
+        
     }
 }

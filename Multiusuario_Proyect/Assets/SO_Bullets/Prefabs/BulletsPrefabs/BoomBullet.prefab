@@ -15,8 +15,8 @@ GameObject:
   - component: {fileID: 415824054931462101}
   - component: {fileID: 4502107043966420256}
   - component: {fileID: 8602940264757200785}
-  - component: {fileID: 4883976478752574950}
-  - component: {fileID: 5343343302775219766}
+  - component: {fileID: 5972291410059664351}
+  - component: {fileID: -2931783272147928259}
   m_Layer: 0
   m_Name: BoomBullet
   m_TagString: Untagged
@@ -144,10 +144,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BulletLife:
-    m_InternalValue: 1
+    m_InternalValue: 0
   BulletDamage:
     m_InternalValue: 1
-  BulletSpeed: 1
+  BulletSpeed: 10
   IsPowerUp: 1
   VFX: {fileID: 4593184484909914552, guid: 2e1e9506f5904a64b81744324fb7cd50, type: 3}
   ShootBehaviour: {fileID: 1422551042493060743, guid: 64a748bfba55ef94988bdb6281332b3f, type: 3}
@@ -173,12 +173,12 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 116
   m_CollisionDetection: 0
---- !u!114 &4883976478752574950
+--- !u!114 &5972291410059664351
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -187,7 +187,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3705014514149148188}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df2868252ab5c4d1da357e8f11f1b524, type: 3}
+  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   UseUnreliableDeltas: 0
@@ -209,7 +209,7 @@ MonoBehaviour:
   InLocalSpace: 0
   Interpolate: 1
   SlerpPosition: 0
---- !u!114 &5343343302775219766
+--- !u!114 &-2931783272147928259
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
