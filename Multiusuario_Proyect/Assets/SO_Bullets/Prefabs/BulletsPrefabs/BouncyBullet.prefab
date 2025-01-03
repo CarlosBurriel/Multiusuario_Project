@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 9022773403202102472}
   - component: {fileID: -1057474307198066741}
   - component: {fileID: -2802514884669029301}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BouncyBullet
   m_TagString: Damage
   m_Icon: {fileID: 0}
