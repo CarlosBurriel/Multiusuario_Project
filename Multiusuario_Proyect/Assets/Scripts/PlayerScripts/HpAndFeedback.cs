@@ -18,6 +18,8 @@ public class HpAndFeedback : NetworkBehaviour
 
     private PlayerAnimHandler playerAnimHandler;
 
+    public GameObject[] PlayerSpawners;
+
     public override void OnNetworkSpawn()
     {
         if (IsOwner) { UI.SetActive(true); }
@@ -30,7 +32,7 @@ public class HpAndFeedback : NetworkBehaviour
  
         CurrentHP.Value = MaxHP;
 
-        
+        gameObject.transform.position = PlayerSpawners[Random.Range(0, PlayerSpawners.Length)].transform.position; //ERROR AL SPAWNEAR EL PERSONAJE EN PLAYERSPAWNERS
     }
 
 
@@ -76,9 +78,25 @@ public class HpAndFeedback : NetworkBehaviour
         {
             playerAnimHandler.UpdateState(PlayerAnimHandler.PlayerState.DEATH);
             GetComponent<PlayerSmovement>().enabled = false;
-            gameObject.GetComponent<NetworkObject>().Despawn();
-           //GameManager.Instance.UpdateGameState(GameManager.GameState.Defeat);
+
+            StartCoroutine("PlayerRespawn");
+            
+            //gameObject.GetComponent<NetworkObject>().Despawn();
+           
+            
+            //GameManager.Instance.UpdateGameState(GameManager.GameState.Defeat);
         }
+    }
+
+    IEnumerator PlayerRespawn()
+    {
+        yield return new WaitForSeconds(1f);
+        gameObject.SetActive(false);
+        
+        yield return new WaitForSeconds(5f);
+        gameObject.transform.position = PlayerSpawners[Random.Range(0, PlayerSpawners.Length)].transform.position;
+        gameObject.SetActive(true);
+
     }
 
  

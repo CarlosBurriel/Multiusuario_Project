@@ -996,6 +996,11 @@ MonoBehaviour:
     m_InternalValue: 0
   FlashMaterial: {fileID: 2100000, guid: 3950de720e55fb04c86db0ef95ed237f, type: 2}
   UI: {fileID: 8278682364632250906}
+  PlayerSpawners:
+  - {fileID: 2043751669146320443, guid: fbfbb608030ee72479b08918aedcca4d, type: 3}
+  - {fileID: 8255298282879734515, guid: b111c1ba0d63c02429e8d1879b0c00a3, type: 3}
+  - {fileID: 332304220333821849, guid: 248e274b0d93225429bc36e79f8430d6, type: 3}
+  - {fileID: 6987817096778458280, guid: d097ba34234f5bb4b80423bd1d91f144, type: 3}
 --- !u!114 &4600244742806838964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1025,10 +1030,12 @@ MonoBehaviour:
   Ammo:
     m_InternalValue: 5
   MaxAmmo: 5
-  HasPowerUp: 0
+  HasPowerUp:
+    m_InternalValue: 0
   Canon: {fileID: 5568019640869225575}
   CommonBullet: {fileID: 6347236056145011887, guid: d4170f0c07654af4689dfc16a9aeb239, type: 3}
   ShootVFX: {fileID: 1429954232896169632, guid: 83036083a4ebcd34f98131bd3cf6f4d2, type: 3}
+  BulletHolder: {fileID: 0}
 --- !u!114 &2806259599589812819
 MonoBehaviour:
   m_ObjectHideFlags: 0
