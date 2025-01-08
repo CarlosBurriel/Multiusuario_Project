@@ -35,7 +35,7 @@ public class SpawnerItemsScript : NetworkBehaviour
         {
             GameObject SpawnedGameObject = Instantiate(Items[RandomItem], Spawners[RandomSpawner].transform);
             SpawnedGameObject.GetComponent<NetworkObject>().Spawn(true);
-            SpawnedGameObject.transform.SetParent(Spawners[RandomSpawner].transform.parent); //ERROR AL HACER HIJOS A LOS OBJETOS
+            SpawnedGameObject.transform.SetParent(Spawners[RandomSpawner].transform); //ERROR AL HACER HIJOS A LOS OBJETOS
 
         }
     }
