@@ -1,7 +1,10 @@
 using DG.Tweening;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using Random = UnityEngine.Random;
 using UnityEngine.SceneManagement;
 
 public class HpAndFeedback : NetworkBehaviour
@@ -18,7 +21,38 @@ public class HpAndFeedback : NetworkBehaviour
 
     private PlayerAnimHandler playerAnimHandler;
 
-    public GameObject[] PlayerSpawners;
+    //public GameObject[] PlayerSpawners;
+
+
+    NetworkManager m_NetworkManager;
+
+    int m_RoundRobinIndex = 0;
+
+    [SerializeField]
+    SpawnMethod m_SpawnMethod;
+
+    [SerializeField]
+    List<GameObject> m_SpawnPositions = new List<GameObject>();
+
+    enum SpawnMethod
+    {
+    Random = 0,
+    RoundRobin = 1,
+    }
+
+    private void Awake()
+    {
+        var networkManager = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
+        networkManager.ConnectionApprovalCallback += ConnectionApprovalWithRandomSpawnPos; // ERROR AL HACER CONEXION
+    }
+    void ConnectionApprovalWithRandomSpawnPos(NetworkManager.ConnectionApprovalRequest request, NetworkManager.ConnectionApprovalResponse response)
+    {
+        // Here we are only using ConnectionApproval to set the player's spawn position. Connections are always approved.
+        response.CreatePlayerObject = true;
+        response.Position = GetNextSpawnPosition().transform.position;
+        response.Rotation = Quaternion.identity;
+        response.Approved = true;
+    }
 
     public override void OnNetworkSpawn()
     {
@@ -32,10 +66,23 @@ public class HpAndFeedback : NetworkBehaviour
  
         CurrentHP.Value = MaxHP;
 
-        gameObject.transform.position = PlayerSpawners[Random.Range(0, PlayerSpawners.Length)].transform.position; //ERROR AL SPAWNEAR EL PERSONAJE EN PLAYERSPAWNERS
     }
 
-
+    public GameObject GetNextSpawnPosition()
+    {
+        switch (m_SpawnMethod)
+        {
+            case SpawnMethod.Random:
+                var index = Random.Range(0, m_SpawnPositions.Count);
+                print(index);
+                return m_SpawnPositions[index];
+            case SpawnMethod.RoundRobin:
+                m_RoundRobinIndex = (m_RoundRobinIndex + 1) % m_SpawnPositions.Count;
+                return m_SpawnPositions[m_RoundRobinIndex];
+            default:
+                throw null;
+        }
+    }
 
     private void OnCollisionEnter(Collision other)
     {
@@ -94,7 +141,7 @@ public class HpAndFeedback : NetworkBehaviour
         gameObject.SetActive(false);
         
         yield return new WaitForSeconds(5f);
-        gameObject.transform.position = PlayerSpawners[Random.Range(0, PlayerSpawners.Length)].transform.position;
+        //gameObject.transform.position = PlayerSpawners[Random.Range(0, PlayerSpawners.Length)].transform.position;
         gameObject.SetActive(true);
 
     }

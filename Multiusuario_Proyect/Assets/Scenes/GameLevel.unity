@@ -16007,6 +16007,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8025309187557250049, guid: 58b3e14b6a62ef84983009b65634e038, type: 3}
+      propertyPath: NetworkConfig.ConnectionApproval
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8025309187557250049, guid: 58b3e14b6a62ef84983009b65634e038, type: 3}
+      propertyPath: NetworkConfig.ClientConnectionBufferTimeout
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 8982797934334801826, guid: 58b3e14b6a62ef84983009b65634e038, type: 3}
       propertyPath: m_Name
       value: NetworkManager
