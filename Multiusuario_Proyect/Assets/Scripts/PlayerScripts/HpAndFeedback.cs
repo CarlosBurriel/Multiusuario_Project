@@ -21,37 +21,15 @@ public class HpAndFeedback : NetworkBehaviour
 
     private PlayerAnimHandler playerAnimHandler;
 
-    //public GameObject[] PlayerSpawners;
+    public GameObject[] PlayerSpawners= new GameObject[4];
 
 
     NetworkManager m_NetworkManager;
 
-    int m_RoundRobinIndex = 0;
-
-    [SerializeField]
-    SpawnMethod m_SpawnMethod;
-
-    [SerializeField]
-    List<GameObject> m_SpawnPositions = new List<GameObject>();
-
-    enum SpawnMethod
-    {
-    Random = 0,
-    RoundRobin = 1,
-    }
-
     private void Awake()
     {
-        var networkManager = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
-        networkManager.ConnectionApprovalCallback += ConnectionApprovalWithRandomSpawnPos; // ERROR AL HACER CONEXION
-    }
-    void ConnectionApprovalWithRandomSpawnPos(NetworkManager.ConnectionApprovalRequest request, NetworkManager.ConnectionApprovalResponse response)
-    {
-        // Here we are only using ConnectionApproval to set the player's spawn position. Connections are always approved.
-        response.CreatePlayerObject = true;
-        response.Position = GetNextSpawnPosition().transform.position;
-        response.Rotation = Quaternion.identity;
-        response.Approved = true;
+
+        PlayerSpawners[] = GameObject.FindGameObjectsWithTag("SpawnPoint");
     }
 
     public override void OnNetworkSpawn()
@@ -68,21 +46,16 @@ public class HpAndFeedback : NetworkBehaviour
 
     }
 
-    public GameObject GetNextSpawnPosition()
+    private void Start()
     {
-        switch (m_SpawnMethod)
-        {
-            case SpawnMethod.Random:
-                var index = Random.Range(0, m_SpawnPositions.Count);
-                print(index);
-                return m_SpawnPositions[index];
-            case SpawnMethod.RoundRobin:
-                m_RoundRobinIndex = (m_RoundRobinIndex + 1) % m_SpawnPositions.Count;
-                return m_SpawnPositions[m_RoundRobinIndex];
-            default:
-                throw null;
-        }
+       
+       transform.position = PlayerSpawners[Random.Range(0, PlayerSpawners.Length)].transform.position;
+       Debug.Log(PlayerSpawners[Random.Range(0, PlayerSpawners.Length)].transform.position);
     }
+    
+        
+    
+
 
     private void OnCollisionEnter(Collision other)
     {

@@ -1003,7 +1003,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2764213938
+  GlobalObjectIdHash: 3246697441
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -1029,8 +1029,7 @@ MonoBehaviour:
     m_InternalValue: 0
   FlashMaterial: {fileID: 2100000, guid: 3950de720e55fb04c86db0ef95ed237f, type: 2}
   UI: {fileID: 8278682364632250906}
-  m_SpawnMethod: 0
-  m_SpawnPositions:
+  PlayerSpawners:
   - {fileID: 2043751669146320443, guid: fbfbb608030ee72479b08918aedcca4d, type: 3}
   - {fileID: 8255298282879734515, guid: b111c1ba0d63c02429e8d1879b0c00a3, type: 3}
   - {fileID: 332304220333821849, guid: 248e274b0d93225429bc36e79f8430d6, type: 3}

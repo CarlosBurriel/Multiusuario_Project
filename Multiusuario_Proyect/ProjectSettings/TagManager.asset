@@ -8,6 +8,10 @@ TagManager:
   - Damage
   - Explosion
   - AmmoPackage
+  - PowerUp
+  - Proyectil
+  - FxTemporaire
+  - SpawnPoint
   layers:
   - Default
   - TransparentFX
