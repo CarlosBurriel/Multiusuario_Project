@@ -21,7 +21,7 @@ public class HpAndFeedback : NetworkBehaviour
 
     private PlayerAnimHandler playerAnimHandler;
 
-    public GameObject[] PlayerSpawners= new GameObject[4];
+    public List<GameObject> SpawnPoints = new List<GameObject>();
 
 
     NetworkManager m_NetworkManager;
@@ -29,7 +29,12 @@ public class HpAndFeedback : NetworkBehaviour
     private void Awake()
     {
 
-        PlayerSpawners[] = GameObject.FindGameObjectsWithTag("SpawnPoint");
+        GameObject[] objetos = GameObject.FindGameObjectsWithTag("SpawnPoint");
+
+        foreach (GameObject obj in objetos)
+        {
+            SpawnPoints.Add(obj);
+        }
     }
 
     public override void OnNetworkSpawn()
@@ -49,8 +54,8 @@ public class HpAndFeedback : NetworkBehaviour
     private void Start()
     {
        
-       transform.position = PlayerSpawners[Random.Range(0, PlayerSpawners.Length)].transform.position;
-       Debug.Log(PlayerSpawners[Random.Range(0, PlayerSpawners.Length)].transform.position);
+       transform.position = SpawnPoints[Random.Range(0, SpawnPoints.Capacity)].transform.position;
+
     }
     
         
