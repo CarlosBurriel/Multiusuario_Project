@@ -3,12 +3,13 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class LoginManager : MonoBehaviour
 {
     public InputField usernameField;
     public InputField passwordField;
-    public Text resultText;
+    public TextMeshProUGUI resultText; 
 
     public void StartLogin()
     {
@@ -34,12 +35,13 @@ public class LoginManager : MonoBehaviour
                 string responseText = www.downloadHandler.text;
                 if (responseText.Contains("success"))
                 {
+                    resultText.text = "Login successful!";
                     SceneManager.LoadScene("StartMenu");
-                    //resultText.text = "Login successful!";
+                    
                 }
                 else
                 {
-                    resultText.text = "Login failed!";
+                    resultText.text = "Login failed! Incorrect Password or Username";
                 }
             }
         }

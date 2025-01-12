@@ -911,6 +911,7 @@ GameObject:
   - component: {fileID: 7278856278120425363}
   - component: {fileID: 1913711028770763237}
   - component: {fileID: -6430814149465453723}
+  - component: {fileID: 6901675404902163461}
   - component: {fileID: 5779707292253858673}
   - component: {fileID: 4600244742806838964}
   - component: {fileID: 1422551042493060743}
@@ -1003,7 +1004,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3246697441
+  GlobalObjectIdHash: 2764213938
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -1012,6 +1013,18 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+--- !u!114 &6901675404902163461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4555721202944329908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: decf100f635095f49acdfe94c564b12a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5779707292253858673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1029,11 +1042,7 @@ MonoBehaviour:
     m_InternalValue: 0
   FlashMaterial: {fileID: 2100000, guid: 3950de720e55fb04c86db0ef95ed237f, type: 2}
   UI: {fileID: 8278682364632250906}
-  PlayerSpawners:
-  - {fileID: 2043751669146320443, guid: fbfbb608030ee72479b08918aedcca4d, type: 3}
-  - {fileID: 8255298282879734515, guid: b111c1ba0d63c02429e8d1879b0c00a3, type: 3}
-  - {fileID: 332304220333821849, guid: 248e274b0d93225429bc36e79f8430d6, type: 3}
-  - {fileID: 6987817096778458280, guid: d097ba34234f5bb4b80423bd1d91f144, type: 3}
+  SpawnPoints: []
 --- !u!114 &4600244742806838964
 MonoBehaviour:
   m_ObjectHideFlags: 0

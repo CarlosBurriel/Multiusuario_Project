@@ -4,12 +4,13 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class RegisterManager : MonoBehaviour
 {
     public InputField usernameField;
     public InputField passwordField;
-    public Text resultText;
+    public TextMeshProUGUI resultText;
 
     public void StartRegister()
     {
@@ -38,13 +39,13 @@ public class RegisterManager : MonoBehaviour
                 Debug.Log(responseText);
                 if (responseText.Contains("success"))
                 {
-                    SceneManager.LoadScene("StartMenu");
-                    //resultText.text = "Register successful!";
+                    SceneManager.LoadScene("GameLevel2");
+                    resultText.text = "Register successful!";
                 }
                 //==Este else if es añadido para ver si esta duplicado===
                 else if(responseText.Contains("duplicate"))
                 {
-                    resultText.text = "Register failed! Duplicated value";
+                    resultText.text = "Register failed! An account with that username already exists";
                 }
                 //===================================================
                 else

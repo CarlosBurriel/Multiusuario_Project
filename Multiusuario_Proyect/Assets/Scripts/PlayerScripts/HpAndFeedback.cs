@@ -23,12 +23,8 @@ public class HpAndFeedback : NetworkBehaviour
 
     public List<GameObject> SpawnPoints = new List<GameObject>();
 
-
-    NetworkManager m_NetworkManager;
-
     private void Awake()
     {
-
         GameObject[] objetos = GameObject.FindGameObjectsWithTag("SpawnPoint");
 
         foreach (GameObject obj in objetos)
@@ -48,14 +44,11 @@ public class HpAndFeedback : NetworkBehaviour
         OwnMaterial = Render.material;
  
         CurrentHP.Value = MaxHP;
-
     }
 
     private void Start()
     {
-       
        transform.position = SpawnPoints[Random.Range(0, SpawnPoints.Capacity)].transform.position;
-
     }
     
         
@@ -64,7 +57,7 @@ public class HpAndFeedback : NetworkBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Damage"))
+        if (other.gameObject.CompareTag("Damage") && !other.gameObject.GetComponent<NetworkObject>().IsOwner)
         {
             OnHitFeedback();
             TakeDamage(other);
@@ -124,5 +117,10 @@ public class HpAndFeedback : NetworkBehaviour
 
     }
 
- 
+    private void OnEnable()
+    {
+        transform.position = SpawnPoints[Random.Range(0, SpawnPoints.Capacity)].transform.position;
+    }
+
+
 }

@@ -23,20 +23,12 @@ public class ShootBehaviour : NetworkBehaviour
     public GameObject BulletHolder;
     
     private Collider ThisCollider;
-
-
     #endregion
 
     private PlayerControls ThisPlayerInputs;
 
     private PlayerAnimHandler playerAnimHandler;
      
-    public struct BMaterial : INetworkSerializable
-    {
-        public Color bullmat;
-
-        public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter { serializer.SerializeValue(ref bullmat); }
-    }
 
     public override void OnNetworkSpawn()
     {
@@ -122,8 +114,6 @@ public class ShootBehaviour : NetworkBehaviour
         if (HasPowerUp.Value) HasPowerUp.Value = false; BulletHolder = CommonBullet;
         Projectile.GetComponent<NetworkObject>().SpawnWithOwnership(serverRpcParams.Receive.SenderClientId, true);
         Projectile.GetComponent<Rigidbody>().velocity = transform.forward * Projectile.GetComponent<BulletBehaviour>().BulletSpeed;
-
-        Physics.IgnoreCollision(ThisCollider, Projectile.GetComponent<Collider>());
     }
 
     public void OnTriggerEnter(Collider other)

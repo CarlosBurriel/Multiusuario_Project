@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class SpawnerItemsScript : NetworkBehaviour
 {
+    public static SpawnerItemsScript Instance;
+
     [Header("Spawner GameObjects")]
     public GameObject[] Spawners;
 
@@ -17,14 +19,24 @@ public class SpawnerItemsScript : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
+        
+
         if (!IsServer)
         {
             enabled = false; return;
         }
-
-        InvokeRepeating("SpawnNewItems", 5.0f, 10.0f);
+        
     }
 
+    private void Awake()
+    {
+        Instance = this;
+    }
+
+    public void StartItemSpawner()
+    {
+        InvokeRepeating("SpawnNewItems", 5.0f, 10.0f);
+    }
     void SpawnNewItems()
     {
         RandomItem = Random.Range(0, Items.Length); 
