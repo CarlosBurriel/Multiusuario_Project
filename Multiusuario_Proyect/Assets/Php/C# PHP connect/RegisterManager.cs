@@ -11,6 +11,7 @@ public class RegisterManager : MonoBehaviour
     public InputField usernameField;
     public InputField passwordField;
     public TextMeshProUGUI resultText;
+    
 
     public void StartRegister()
     {
@@ -39,8 +40,10 @@ public class RegisterManager : MonoBehaviour
                 Debug.Log(responseText);
                 if (responseText.Contains("success"))
                 {
+                    pasableusername.instance.username = usernameField.text;
                     SceneManager.LoadScene("GameLevel2");
                     resultText.text = "Register successful!";
+
                 }
                 //==Este else if es añadido para ver si esta duplicado===
                 else if(responseText.Contains("duplicate"))
@@ -54,5 +57,6 @@ public class RegisterManager : MonoBehaviour
                 }
             }
         }
+
     }
 }

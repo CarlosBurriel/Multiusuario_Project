@@ -13,12 +13,16 @@ public class PHPHandler : NetworkBehaviour
 
     [HideInInspector] public int Deaths;
 
+    
+
 
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
         GameManager.Instance.Players.Add(this);
         UpdatePlayerCountServerRPC();
+        PlayerUsername = pasableusername.instance.username;
+        Destroy(pasableusername.instance.gameObject);
     }
 
     [ServerRpc(RequireOwnership = false)]

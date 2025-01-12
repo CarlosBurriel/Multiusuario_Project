@@ -6,6 +6,8 @@ using TMPro;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Networking;
+
 
 public class GameManager : NetworkBehaviour
 {
@@ -29,6 +31,7 @@ public class GameManager : NetworkBehaviour
 
     [HideInInspector] public List<PHPHandler> Players;
     private float CurrentTime;
+
 
     
 
@@ -92,9 +95,9 @@ public class GameManager : NetworkBehaviour
         }
     }
 
+        List<PHPHandler> Winners = new List<PHPHandler>();
     public void SelectWinner()
     {
-        List<PHPHandler> Winners = new List<PHPHandler>();
         int LowerDeathCount = 10;
         for (int i = 0; i < Players.Count; i++)
         {
@@ -128,14 +131,77 @@ public class GameManager : NetworkBehaviour
 
     public void EndGame()
     {
-        for(int i = 0; i < Players.Count;i++)
+        
+        StartCoroutine(WinnersCoroutines());
+        print(Winners[0].PlayerUsername);
+
+        //StartCoroutine(LoserCoroutines());
+
+       
+
+        for (int i = 0; i < Players.Count;i++)
         {
             Destroy(Players[i].gameObject);
             Players.Remove(Players[i]);
         }
         NetworkManager.Singleton.Shutdown();
         if(SceneManager.GetActiveScene().name == "GameLevel") { SceneManager.LoadScene("GameLevel2"); } else { SceneManager.LoadScene("GameLevel"); }
+
     }
+
+    IEnumerator WinnersCoroutines()
+    {
+
+        WWWForm form = new WWWForm();
+        form.AddField("username",Winners[0].PlayerUsername);
+
+        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost/unity_api/Winner.php", form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                print(www.error);
+            }
+            else
+            {
+                string responseText = www.downloadHandler.text;
+                print(responseText);
+               
+            }
+        }
+
+
+    }
+    /*
+    IEnumerator LoserCoroutines()
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("username", Winners[0].PlayerUsername);
+
+        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost/unity_api/Loser.php", form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                print(www.error);
+            }
+            else
+            {
+                string responseText = www.downloadHandler.text;
+                if (responseText.Contains("success"))
+                {
+
+                    print("ole");
+
+
+                }
+
+            }
+        }
+    }
+    */
 
     public enum GameState
     {

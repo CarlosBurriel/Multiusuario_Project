@@ -9,7 +9,8 @@ public class LoginManager : MonoBehaviour
 {
     public InputField usernameField;
     public InputField passwordField;
-    public TextMeshProUGUI resultText; 
+    public TextMeshProUGUI resultText;
+    
 
     public void StartLogin()
     {
@@ -35,8 +36,9 @@ public class LoginManager : MonoBehaviour
                 string responseText = www.downloadHandler.text;
                 if (responseText.Contains("success"))
                 {
+                    pasableusername.instance.username = usernameField.text;
                     resultText.text = "Login successful!";
-                    SceneManager.LoadScene("StartMenu");
+                    SceneManager.LoadScene("GameLevel2");
                     
                 }
                 else

@@ -2,7 +2,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "unity_login";
+$dbname = "piscifactoria";
 
 // Crear conexión
 $conn = new mysqli($servername, $username, $password, $dbname);

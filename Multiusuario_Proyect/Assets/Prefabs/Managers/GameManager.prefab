@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 948336596
+  GlobalObjectIdHash: 2446846623
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -68,8 +68,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   State: 0
-  DurationOfPlay: 5
-  DurationOfEnding: 2
+  DurationOfPlay: 300
+  DurationOfEnding: 10
   TimerText: {fileID: 6652157066922410529}
   ResolutionText: {fileID: 6491626155339649185}
   NumberOfPlayers:
