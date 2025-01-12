@@ -908,7 +908,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3449821680785823664}
-  - component: {fileID: 7278856278120425363}
+  - component: {fileID: 1294102544021923433}
   - component: {fileID: 1913711028770763237}
   - component: {fileID: -6430814149465453723}
   - component: {fileID: 6901675404902163461}
@@ -944,8 +944,8 @@ Transform:
   - {fileID: 8213213434891149245}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &7278856278120425363
-BoxCollider:
+--- !u!136 &1294102544021923433
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -962,9 +962,11 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1.3988379, z: 2.5839968}
-  m_Center: {x: 0, y: 0.19941896, z: -0.7919984}
+  serializedVersion: 2
+  m_Radius: 0.7245319
+  m_Height: 3.4581814
+  m_Direction: 2
+  m_Center: {x: 0.0043059206, y: 0.6752876, z: -1.15143}
 --- !u!54 &1913711028770763237
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1025,6 +1027,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: decf100f635095f49acdfe94c564b12a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerUsername: 
+  Kills: 0
+  Deaths: 0
 --- !u!114 &5779707292253858673
 MonoBehaviour:
   m_ObjectHideFlags: 0
