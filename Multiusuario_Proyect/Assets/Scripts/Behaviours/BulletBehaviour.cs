@@ -1,4 +1,6 @@
 using Unity.Netcode;
+using System;
+using System.Collections;
 using UnityEngine;
 
 public class BulletBehaviour : NetworkBehaviour
@@ -53,6 +55,9 @@ public class BulletBehaviour : NetworkBehaviour
         render.enabled = false;
         col.enabled = false;
         BulletLife.Value -= BulletLife.Value;
+        StartCoroutine(pendejo());
+        
+        
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -65,9 +70,17 @@ public class BulletBehaviour : NetworkBehaviour
         }
     }
 
+   
+
     private new void OnDestroy()
     {
         if (VFX) { Instantiate(VFX, transform.position, Quaternion.identity); }
+    }
+
+    IEnumerator pendejo()
+    {
+        yield return new WaitForSecondsRealtime(0.1f);
+        GetComponent<NetworkObject>().Despawn();
     }
 
 
