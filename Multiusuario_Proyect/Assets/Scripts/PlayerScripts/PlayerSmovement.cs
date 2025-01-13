@@ -27,6 +27,10 @@ public class PlayerSmovement : NetworkBehaviour
     #region InputHandling
     private PlayerControls ThisPlayerInputs;
 
+    private void OnEnable()
+    {
+        ThisPlayerInputs.Enable();
+    }
     private void OnDisable() => ThisPlayerInputs.Disable();
 
     #endregion

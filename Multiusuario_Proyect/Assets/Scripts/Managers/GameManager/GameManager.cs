@@ -31,6 +31,7 @@ public class GameManager : NetworkBehaviour
 
     [HideInInspector] public List<PHPHandler> Players;
     private float CurrentTime;
+    private bool Started = false;
 
 
     
@@ -47,8 +48,9 @@ public class GameManager : NetworkBehaviour
 
     private void CheckForPlayStart(int previousValue, int newValue)
     {
-        if(newValue > 1)
+        if(newValue > 1 && !Started)
         {
+            Started = true;
             UpdateGameState(GameState.RoundStart);
         }
     }

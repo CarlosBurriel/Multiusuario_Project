@@ -26,9 +26,14 @@ public class BulletBehaviour : NetworkBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Wall"))
         {
             LifeLoseBulletServerRPC();
+        }
+
+        if (other.gameObject.CompareTag("Player"))
+        {
+            gameObject.GetComponent<NetworkObject>().Despawn();
         }
     }
 

@@ -16,10 +16,14 @@ public class HpAndFeedback : NetworkBehaviour
 
     private SkinnedMeshRenderer Render;
     private Material OwnMaterial;
+    private Collider col;
+    private Rigidbody rb;
 
     public GameObject UI;
 
     private PlayerAnimHandler playerAnimHandler;
+    private ShootBehaviour playerShoot;
+    private PlayerSmovement playerMove;
 
     public List<GameObject> SpawnPoints = new List<GameObject>();
 
@@ -39,7 +43,11 @@ public class HpAndFeedback : NetworkBehaviour
 
         base.OnNetworkSpawn();
         playerAnimHandler = GetComponentInChildren<PlayerAnimHandler>();
+        playerShoot = GetComponent<ShootBehaviour>();
+        playerMove = GetComponent<PlayerSmovement>();
 
+        rb = GetComponent<Rigidbody>();
+        col = GetComponent<Collider>();
         Render = GetComponentInChildren<SkinnedMeshRenderer>();
         OwnMaterial = Render.material;
  
@@ -57,20 +65,22 @@ public class HpAndFeedback : NetworkBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Damage") && !other.gameObject.GetComponent<NetworkObject>().IsOwner)
+        if (other.gameObject.CompareTag("Damage"))
         {
             OnHitFeedback();
-            TakeDamage(other);
+            TakeDamageClientRPC(other.gameObject);
         }
     }
 
- 
-    public void TakeDamage(Collision collision)
+    [ClientRpc]
+    public void TakeDamageClientRPC(NetworkObjectReference g)
     {
-
-        CurrentHP.Value -= collision.gameObject.GetComponent<BulletBehaviour>().BulletDamage.Value;
-        
+        if (g.TryGet(out NetworkObject other))
+        {
+            CurrentHP.Value -= other.gameObject.GetComponent<BulletBehaviour>().BulletDamage.Value;
+        }
     }
+
     public void OnHitFeedback()
     {
         SizeChange();
@@ -97,7 +107,7 @@ public class HpAndFeedback : NetworkBehaviour
             playerAnimHandler.UpdateState(PlayerAnimHandler.PlayerState.DEATH);
             GetComponent<PlayerSmovement>().enabled = false;
 
-            StartCoroutine("PlayerRespawn");
+            StartCoroutine(PlayerRespawn());
             
             //gameObject.GetComponent<NetworkObject>().Despawn();
            
@@ -109,13 +119,35 @@ public class HpAndFeedback : NetworkBehaviour
     IEnumerator PlayerRespawn()
     {
         yield return new WaitForSeconds(1f);
-        gameObject.SetActive(false);
-        
-        yield return new WaitForSeconds(5f);
+        PlayerDespawnServerRPC();
+       
+        yield return new WaitForSeconds(2f);
         //gameObject.transform.position = PlayerSpawners[Random.Range(0, PlayerSpawners.Length)].transform.position;
-        gameObject.SetActive(true);
+        PlayerRespawnServerRPC();
 
     }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void PlayerRespawnServerRPC()
+    {
+        playerAnimHandler.UpdateState(PlayerAnimHandler.PlayerState.IDLE);
+        playerMove.enabled = true;
+        Render.enabled = true;
+        playerShoot.Ammo.Value = playerShoot.MaxAmmo;
+        CurrentHP.Value = MaxHP;
+        col.enabled = true;
+        transform.position = SpawnPoints[Random.Range(0, SpawnPoints.Capacity)].transform.position;
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void PlayerDespawnServerRPC()
+    {
+        rb.velocity = Vector3.zero;
+        Render.enabled = false;
+        col.enabled = false;
+
+    }
+
 
     private void OnEnable()
     {
