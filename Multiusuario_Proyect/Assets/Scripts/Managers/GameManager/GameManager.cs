@@ -47,7 +47,7 @@ public class GameManager : NetworkBehaviour
 
     private void CheckForPlayStart(int previousValue, int newValue)
     {
-        if(newValue > 0)
+        if(newValue > 1)
         {
             UpdateGameState(GameState.RoundStart);
         }

@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/TestScenes/Gabriel/Register.unity
     guid: 60368c921989a95458a546f765e7be30
   - enabled: 0
-    path: Assets/Scenes/StartMenu.unity
+    path: Assets/Scenes/TestScenes/Al/StartMenu.unity
     guid: 29a0dca38b2935f4db509e5201443376
   - enabled: 1
     path: Assets/Scenes/Register.unity
