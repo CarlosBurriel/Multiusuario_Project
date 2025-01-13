@@ -18,11 +18,11 @@ EditorBuildSettings:
     path: Assets/Scenes/Register.unity
     guid: 0a8b9357ba8dedf468fd1089b4b2ae6f
   - enabled: 1
-    path: Assets/Scenes/GameLevel.unity
-    guid: 0078184bfad344648aaf35f6e66b3ca9
-  - enabled: 1
     path: Assets/Scenes/GameLevel2.unity
     guid: 09b70b0c057b1f94692be9ceb6e31062
+  - enabled: 1
+    path: Assets/Scenes/GameLevel.unity
+    guid: 0078184bfad344648aaf35f6e66b3ca9
   - enabled: 1
     path: Assets/Scenes/Loser.unity
     guid: 3627bab3a222f3347a9c55f3fc6512bf

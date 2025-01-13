@@ -10,7 +10,7 @@ using UnityEngine.SceneManagement;
 public class HpAndFeedback : NetworkBehaviour
 {
     public int MaxHP;
-    [SerializeField]public NetworkVariable<int> CurrentHP = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    [SerializeField]public NetworkVariable<int> CurrentHP = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
     public Material FlashMaterial;
 
@@ -68,12 +68,12 @@ public class HpAndFeedback : NetworkBehaviour
         if (other.gameObject.CompareTag("Damage"))
         {
             OnHitFeedback();
-            TakeDamageClientRPC(other.gameObject);
+            TakeDamageServerRPC(other.collider.gameObject);
         }
     }
 
-    [ClientRpc]
-    public void TakeDamageClientRPC(NetworkObjectReference g)
+    [ServerRpc(RequireOwnership = false)]
+    public void TakeDamageServerRPC(NetworkObjectReference g)
     {
         if (g.TryGet(out NetworkObject other))
         {

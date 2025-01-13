@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -17,9 +15,14 @@ public class BulletBehaviour : NetworkBehaviour
 
     public ShootBehaviour ShootBehaviour;
 
+    private Collider col;
+    private Renderer render;
+
     public override void OnNetworkSpawn()
     {
         BulletLife.OnValueChanged += BulletLifeLoseServerRPC;
+        col = GetComponent<Collider>();
+        render = GetComponent<Renderer>();
         
     }
    
@@ -33,7 +36,8 @@ public class BulletBehaviour : NetworkBehaviour
 
         if (other.gameObject.CompareTag("Player"))
         {
-            gameObject.GetComponent<NetworkObject>().Despawn();
+            
+            BulletDespawnServerRPC();
         }
     }
 
@@ -41,6 +45,14 @@ public class BulletBehaviour : NetworkBehaviour
     public void LifeLoseBulletServerRPC()
     {    
         BulletLife.Value--;
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void BulletDespawnServerRPC()
+    {
+        render.enabled = false;
+        col.enabled = false;
+        BulletLife.Value -= BulletLife.Value;
     }
 
     [ServerRpc(RequireOwnership = false)]
