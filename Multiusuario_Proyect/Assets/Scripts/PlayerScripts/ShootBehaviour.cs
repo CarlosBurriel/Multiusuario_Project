@@ -57,10 +57,10 @@ public class ShootBehaviour : NetworkBehaviour
         Canon.SetActive(true);
         BulletHolder = CommonBullet;
 
-    } 
+    }
 
 
-    private void OnDisable() => ThisPlayerInputs.Disable();
+    private void OnDisable() { if(ThisPlayerInputs != null) ThisPlayerInputs.Disable(); }
 
 
     #region Shoot&Bullet Handling
@@ -98,7 +98,7 @@ public class ShootBehaviour : NetworkBehaviour
         if (Ammo.Value > MaxAmmo) { Ammo.Value = MaxAmmo; }
     }
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     public void DespawnAmmoPackageServerRPC(NetworkObjectReference g)
     {
         if(g.TryGet(out NetworkObject other))

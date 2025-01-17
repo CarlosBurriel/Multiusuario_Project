@@ -21,7 +21,7 @@ public class PHPHandler : NetworkBehaviour
         base.OnNetworkSpawn();
         GameManager.Instance.Players.Add(this);
         UpdatePlayerCountServerRPC();
-        PlayerUsername = pasableusername.instance.username;
+        PlayerUsername = PasableUsername.instance.username;
     }
 
     [ServerRpc(RequireOwnership = false)]

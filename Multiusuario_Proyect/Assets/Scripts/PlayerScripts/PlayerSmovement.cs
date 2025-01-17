@@ -29,13 +29,16 @@ public class PlayerSmovement : NetworkBehaviour
 
     private void OnEnable()
     {
-        ThisPlayerInputs.Enable();
+        if(ThisPlayerInputs != null)
+        {
+            ThisPlayerInputs.Enable();
+        } 
     }
-    private void OnDisable() => ThisPlayerInputs.Disable();
+    private void OnDisable() { if (ThisPlayerInputs != null) ThisPlayerInputs.Disable(); }
 
     #endregion
 
-  
+
 
     public override void OnNetworkSpawn()
     {
@@ -87,6 +90,7 @@ public class PlayerSmovement : NetworkBehaviour
        
     }
 
+    
     public void MoveAndRotate(Vector3 MoveDirection)
     {
         rb.velocity = transform.forward * MoveDirection.z * Speed;

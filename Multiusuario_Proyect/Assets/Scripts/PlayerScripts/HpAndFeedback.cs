@@ -6,6 +6,8 @@ using Unity.Netcode;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
+using UnityEngine.UIElements;
 
 public class HpAndFeedback : NetworkBehaviour
 {
@@ -13,6 +15,9 @@ public class HpAndFeedback : NetworkBehaviour
     [SerializeField]public NetworkVariable<int> CurrentHP = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
     public Material FlashMaterial;
+
+    private bool IsSizeChanging = false;
+    private int TempDamage;
 
     private SkinnedMeshRenderer Render;
     private Material OwnMaterial;
@@ -67,91 +72,117 @@ public class HpAndFeedback : NetworkBehaviour
     {
         if (other.gameObject.CompareTag("Damage"))
         {
-            OnHitFeedback();
-            TakeDamageServerRPC(other.collider.gameObject);
+            TempDamage = other.gameObject.GetComponent<BulletBehaviour>().BulletDamage.Value;
+            TakeDamageServerRPC();
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Damage"))
+        {
+            TempDamage = other.gameObject.GetComponent<BulletBehaviour>().BulletDamage.Value;
+            TakeDamageServerRPC();
         }
     }
 
     [ServerRpc(RequireOwnership = false)]
-    public void TakeDamageServerRPC(NetworkObjectReference g)
+    public void TakeDamageServerRPC()
     {
-        if (g.TryGet(out NetworkObject other))
-        {
-            CurrentHP.Value -= other.gameObject.GetComponent<BulletBehaviour>().BulletDamage.Value;
-        }
+        
+            CurrentHP.Value -= TempDamage;
+            ChangeSizeClientRPC();
+            ChangeColorClientRPC();
+            
+        
     }
 
-    public void OnHitFeedback()
+    #region Feedback
+    [ClientRpc(RequireOwnership = false)]
+    public void ChangeSizeClientRPC()
     {
-        SizeChange();
+        if (!IsSizeChanging)
+        {
+            IsSizeChanging = true;
+            transform.DOPunchScale(transform.localScale * Random.Range(1, 1.3f), 0.2f, 10, 0).onComplete  = SizeFix;
+            
+        }
+        
+    }
+
+    public void SizeFix()
+    {
+        
+        IsSizeChanging = false;
+        transform.DOPunchScale(Vector3.one, 0.1f);
+    }
+
+    [ClientRpc(RequireOwnership = false)]
+    void ChangeColorClientRPC()
+    {
+        Render.material = FlashMaterial;
         StartCoroutine(Flash());
     }
-
-    public void SizeChange()
-    {
-        transform.DOPunchScale(transform.localScale * Random.Range(1, 1.3f), 0.5f);
-    }
-
     public IEnumerator Flash()
     {
-        Render.material = FlashMaterial;   
         yield return new WaitForSeconds(0.2f);
         Render.material = OwnMaterial;
     }
+    #endregion
 
     [ServerRpc(RequireOwnership = false)]
     public void CheckLifeServerRPC(int previousValue, int newValue)
     {
         if (newValue <= 0)
         {
+            playerMove.enabled = false;
             playerAnimHandler.UpdateState(PlayerAnimHandler.PlayerState.DEATH);
-            GetComponent<PlayerSmovement>().enabled = false;
-
             StartCoroutine(PlayerRespawn());
-            
-            //gameObject.GetComponent<NetworkObject>().Despawn();
-           
-            
-            //GameManager.Instance.UpdateGameState(GameManager.GameState.Defeat);
         }
     }
 
+    #region Respawn Hell
     IEnumerator PlayerRespawn()
     {
         yield return new WaitForSeconds(1f);
-        PlayerDespawnServerRPC();
+        DespawnLogicClientRPC();
        
         yield return new WaitForSeconds(2f);
-        //gameObject.transform.position = PlayerSpawners[Random.Range(0, PlayerSpawners.Length)].transform.position;
-        PlayerRespawnServerRPC();
+       
+        RespawnLogicClientRPC();
 
     }
 
-    [ServerRpc(RequireOwnership = false)]
-    public void PlayerRespawnServerRPC()
+   
+
+    [ClientRpc(RequireOwnership = false)]
+    public void RespawnLogicClientRPC()
     {
+        transform.localScale = Vector3.one;
+        transform.position = SpawnPoints[Random.Range(0, SpawnPoints.Count)].transform.position;
         playerAnimHandler.UpdateState(PlayerAnimHandler.PlayerState.IDLE);
         playerMove.enabled = true;
-        Render.enabled = true;
+        Render.gameObject.SetActive(true);
         playerShoot.Ammo.Value = playerShoot.MaxAmmo;
         CurrentHP.Value = MaxHP;
         col.enabled = true;
-        transform.position = SpawnPoints[Random.Range(0, SpawnPoints.Capacity)].transform.position;
     }
 
-    [ServerRpc(RequireOwnership = false)]
-    public void PlayerDespawnServerRPC()
+  
+
+    [ClientRpc(RequireOwnership = false)]
+    public void DespawnLogicClientRPC()
     {
+        rb.isKinematic = false;
         rb.velocity = Vector3.zero;
-        Render.enabled = false;
+        Render.gameObject.SetActive(false);
         col.enabled = false;
-
     }
-
+    #endregion
 
     private void OnEnable()
     {
-        transform.position = SpawnPoints[Random.Range(0, SpawnPoints.Capacity)].transform.position;
+        transform.position = SpawnPoints[Random.Range(0, SpawnPoints.Count)].transform.position;
     }
 
 

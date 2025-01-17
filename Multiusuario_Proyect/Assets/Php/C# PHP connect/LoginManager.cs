@@ -36,7 +36,7 @@ public class LoginManager : MonoBehaviour
                 string responseText = www.downloadHandler.text;
                 if (responseText.Contains("success"))
                 {
-                    pasableusername.instance.username = usernameField.text;
+                    PasableUsername.instance.username = usernameField.text;
                     resultText.text = "Login successful!";
                     SceneManager.LoadScene("GameLevel2");
                     

@@ -35,9 +35,11 @@ public class SpawnerItemsScript : NetworkBehaviour
 
     public void StartItemSpawner()
     {
-        InvokeRepeating("SpawnNewItems", 5.0f, 10.0f);
+        InvokeRepeating("SpawnNewItemsServerRPC", 5.0f, 10.0f);
     }
-    void SpawnNewItems()
+
+    [ServerRpc(RequireOwnership = false)]
+    void SpawnNewItemsServerRPC()
     {
         RandomItem = Random.Range(0, Items.Length); 
         RandomSpawner = Random.Range(0, Spawners.Length);

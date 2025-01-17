@@ -611,7 +611,7 @@ Transform:
   m_GameObject: {fileID: 3762049806771514198}
   serializedVersion: 2
   m_LocalRotation: {x: 0.21643938, y: -0, z: -0.000000007450581, w: 0.9762961}
-  m_LocalPosition: {x: 0, y: 2.2678535, z: -2.7189236}
+  m_LocalPosition: {x: 0.00000011920929, y: 2.2678535, z: -2.7189238}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -738,7 +738,7 @@ Transform:
   m_GameObject: {fileID: 3763905857929381378}
   serializedVersion: 2
   m_LocalRotation: {x: 0.21643938, y: -0, z: -0.000000007450581, w: 0.9762961}
-  m_LocalPosition: {x: 0, y: 2.2678535, z: -2.7189236}
+  m_LocalPosition: {x: 0.00000011920929, y: 2.2678535, z: -2.7189238}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -915,8 +915,8 @@ GameObject:
   - component: {fileID: 5779707292253858673}
   - component: {fileID: 4600244742806838964}
   - component: {fileID: 1422551042493060743}
-  - component: {fileID: 2806259599589812819}
-  - component: {fileID: 7917183149262257335}
+  - component: {fileID: 8766380898044805481}
+  - component: {fileID: 7285043327295675435}
   m_Layer: 0
   m_Name: NewPlayer
   m_TagString: Player
@@ -1083,7 +1083,7 @@ MonoBehaviour:
   CommonBullet: {fileID: 6347236056145011887, guid: d4170f0c07654af4689dfc16a9aeb239, type: 3}
   ShootVFX: {fileID: 1429954232896169632, guid: 83036083a4ebcd34f98131bd3cf6f4d2, type: 3}
   BulletHolder: {fileID: 0}
---- !u!114 &2806259599589812819
+--- !u!114 &8766380898044805481
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1114,7 +1114,7 @@ MonoBehaviour:
   InLocalSpace: 0
   Interpolate: 1
   SlerpPosition: 0
---- !u!114 &7917183149262257335
+--- !u!114 &7285043327295675435
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

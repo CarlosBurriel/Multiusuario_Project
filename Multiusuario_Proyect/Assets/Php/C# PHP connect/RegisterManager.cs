@@ -40,7 +40,7 @@ public class RegisterManager : MonoBehaviour
                 Debug.Log(responseText);
                 if (responseText.Contains("success"))
                 {
-                    pasableusername.instance.username = usernameField.text;
+                    PasableUsername.instance.username = usernameField.text;
                     SceneManager.LoadScene("GameLevel2");
                     resultText.text = "Register successful!";
 
