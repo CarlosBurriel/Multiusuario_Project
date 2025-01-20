@@ -16,14 +16,14 @@ if ($conn->connect_error) {
 $inputUsername = $_POST['username'];
 
 // Consultar base de datos
-$sql =  "UPDATE account_stats SET wins= wins+ 1  WHERE player_id = (SELECT account_id FROM accounts WHERE username= '$inputUsername')";
+$sql =  "UPDATE account_stats SET powerups_gathered= powerups_gathered+ 1  WHERE player_id = (SELECT account_id FROM accounts WHERE username= '$inputUsername')";
 
 $result = $conn->query($sql);
 
     if ($result) {
-        echo json_encode(array("status" => "success", "message" => "Winner updated"));
+        echo json_encode(array("status" => "success", "message" => "powerups_gathered updated"));
     } else {
-        echo json_encode(array("status" => "failed", "message" => "Error updating winner: " . $conn->error));
+        echo json_encode(array("status" => "failed", "message" => "Error updating powerups_gathered: " . $conn->error));
     }
 
 

@@ -28,13 +28,16 @@ public class GameManager : NetworkBehaviour
     public TextMeshProUGUI ResolutionText;
 
     public NetworkVariable<int> NumberOfPlayers = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+    public NetworkVariable<int> total_deaths = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+    public NetworkVariable<int> total_powerups = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+    public NetworkVariable<int> total_ammo_gathered = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
     [HideInInspector] public List<PHPHandler> Players;
     private float CurrentTime;
     private bool Started = false;
 
-
     
+   
 
     private void Awake()
     {
@@ -67,6 +70,8 @@ public class GameManager : NetworkBehaviour
                 NumberOfPlayers.Value = 0;
                 break;
             case GameState.RoundStart:
+                if (IsOwner) { StartCoroutine(CreateGameDataCoroutines()); }
+                
                 CurrentTime = DurationOfPlay;
                 TimerText.text = CurrentTime.ToString();
 
@@ -97,23 +102,30 @@ public class GameManager : NetworkBehaviour
         }
     }
 
-        List<PHPHandler> Winners = new List<PHPHandler>();
+    List<PHPHandler> Winners = new List<PHPHandler>();
+    List<PHPHandler> Losers = new List<PHPHandler>();
     public void SelectWinner()
     {
         int LowerDeathCount = 10;
         for (int i = 0; i < Players.Count; i++)
         {
-            if(Players[i].Deaths < LowerDeathCount)
+            if(Players[i].Deaths.Value < LowerDeathCount)
             {
-                LowerDeathCount = Players[i].Deaths;
+                LowerDeathCount = Players[i].Deaths.Value;
                 Winners.Add(Players[i]);
+            }
+            else
+            {
+                Losers.Add(Players[i]);
             }
         }
         if(Winners.Count > 1)
         {
-            if(Winners[0].Deaths > Winners[1].Deaths)
+            if(Winners[0].Deaths.Value > Winners[1].Deaths.Value)
             {
+                Losers.Add(Winners[0]);
                 Winners.Remove(Winners[0]);
+
             }
             ResolutionText.text = "Is a draw between: ";
             for(int i = 0;i < Winners.Count;i++)
@@ -122,7 +134,9 @@ public class GameManager : NetworkBehaviour
                 ResolutionText.text += ", " + Winners[0].PlayerUsername;
                 if (i == Winners.Count-1) ResolutionText.text += " and " + Winners[0].PlayerUsername;
             }
+            
             UpdateGameState(GameState.RoundEnd);
+
         }
         else
         {
@@ -133,11 +147,20 @@ public class GameManager : NetworkBehaviour
 
     public void EndGame()
     {
-        
+        if (IsOwner)
+        {
+        StartCoroutine(GameDataCoroutines());
+        }
         StartCoroutine(WinnersCoroutines());
-        print(Winners[0].PlayerUsername);
-
-        //StartCoroutine(LoserCoroutines());
+        for (int i = 0; i < Losers.Count; i++)
+        {
+            print(Losers[i].PlayerUsername);
+            StartCoroutine(LosersCoroutines(i));
+        }
+       for(int i=0; i< Winners.Count; i++)
+        {
+            print(Winners[i].PlayerUsername);
+        }
 
        
 
@@ -175,13 +198,13 @@ public class GameManager : NetworkBehaviour
 
 
     }
-    /*
-    IEnumerator LoserCoroutines()
+    IEnumerator LosersCoroutines(int i)
     {
-        WWWForm form = new WWWForm();
-        form.AddField("username", Winners[0].PlayerUsername);
 
-        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost/unity_api/Loser.php", form))
+        WWWForm form = new WWWForm();
+        form.AddField("username", Losers[i].PlayerUsername);
+
+        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost/unity_api/Defeats.php", form))
         {
             yield return www.SendWebRequest();
 
@@ -192,18 +215,80 @@ public class GameManager : NetworkBehaviour
             else
             {
                 string responseText = www.downloadHandler.text;
-                if (responseText.Contains("success"))
-                {
+                print(responseText);
 
-                    print("ole");
+            }
+        }
 
 
-                }
+    }
+    IEnumerator CreateGameDataCoroutines()
+    {
+
+        WWWForm form = new WWWForm();
+        
+
+        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost/unity_api/CreateGamesID.php", form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                print(www.error);
+            }
+            else
+            {
+                string responseText = www.downloadHandler.text;
+                print(responseText);
+
+            }
+        }
+
+
+    }
+    IEnumerator GameDataCoroutines()
+    {
+
+        WWWForm form = new WWWForm();
+        form.AddField("deaths", total_deaths.Value);
+        form.AddField("powerups", total_powerups.Value);
+        form.AddField("ammo", total_ammo_gathered.Value);
+        form.AddField("winner", Winners[0].PlayerUsername);
+        form.AddField("loserA", Losers[0].PlayerUsername);
+        if (Losers.Count <= 2)
+        {
+            form.AddField("loserB", "furrito77");
+        }
+        else
+        {
+            form.AddField("loserB", Losers[1].PlayerUsername);
+        }
+        if (Losers.Count <= 3)
+        {
+            form.AddField("loserC", "furrito77");
+        }
+        else
+        {
+        form.AddField("loserC", Losers[2].PlayerUsername);
+        }
+        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost/unity_api/GamesID.php", form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                print(www.error);
+            }
+            else
+            {
+                string responseText = www.downloadHandler.text;
+                print(responseText);
 
             }
         }
     }
-    */
+
+
 
     public enum GameState
     {

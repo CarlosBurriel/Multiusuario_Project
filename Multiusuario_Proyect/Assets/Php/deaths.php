@@ -14,19 +14,18 @@ if ($conn->connect_error) {
 
 // Recibir datos del formulario
 $inputUsername = $_POST['username'];
-$inputPassword = $_POST['password'];
-
-$deathincrement = $_POST['death']++;
 
 // Consultar base de datos
-$sql = "SELECT * FROM accounts WHERE username='$inputUsername' AND password='$inputPassword'";
+$sql =  "UPDATE account_stats SET deaths= deaths+ 1  WHERE player_id = (SELECT account_id FROM accounts WHERE username= '$inputUsername')";
+
 $result = $conn->query($sql);
 
-if ($result->num_rows > 0) {
-    echo json_encode(array("status" => "success"));
-} else {
-    echo json_encode(array("status" => "failed"));
-}
+    if ($result) {
+        echo json_encode(array("status" => "success", "message" => "Death updated"));
+    } else {
+        echo json_encode(array("status" => "failed", "message" => "Error updating death: " . $conn->error));
+    }
+
 
 $conn->close();
 ?>

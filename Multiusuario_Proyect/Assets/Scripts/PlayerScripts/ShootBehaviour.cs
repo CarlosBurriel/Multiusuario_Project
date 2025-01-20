@@ -4,6 +4,7 @@ using System.Globalization;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Networking;
 
 public class ShootBehaviour : NetworkBehaviour
 {
@@ -28,6 +29,8 @@ public class ShootBehaviour : NetworkBehaviour
     private PlayerControls ThisPlayerInputs;
 
     private PlayerAnimHandler playerAnimHandler;
+
+    private PHPHandler PHPShoot;
      
 
     public override void OnNetworkSpawn()
@@ -41,6 +44,8 @@ public class ShootBehaviour : NetworkBehaviour
             ThisPlayerInputs.PlayerInGame.Shoot.performed += OnShoot;
 
             Ammo.Value = MaxAmmo;
+
+            PHPShoot = GetComponent<PHPHandler>();
 
         }
 
@@ -94,8 +99,19 @@ public class ShootBehaviour : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void UpdateAmmoServerRPC()
     {
-        if (BulletHolder.GetComponent<BulletBehaviour>().IsPowerUp) { HasPowerUp.Value = true; Ammo.Value++; } else { Ammo.Value = MaxAmmo; }
+        if (BulletHolder.GetComponent<BulletBehaviour>().IsPowerUp) 
+        { 
+            HasPowerUp.Value = true; Ammo.Value++; 
+            StartCoroutine(PowerUpsGatheredCoroutines());
+            GameManager.Instance.total_powerups.Value++;
+        } 
+        else 
+        { 
+            Ammo.Value = MaxAmmo; StartCoroutine(AmmoGatheredCoroutines());
+            GameManager.Instance.total_ammo_gathered.Value++;
+        }
         if (Ammo.Value > MaxAmmo) { Ammo.Value = MaxAmmo; }
+        
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -112,6 +128,7 @@ public class ShootBehaviour : NetworkBehaviour
     {
         GameObject Projectile = Instantiate(BulletHolder, Canon.transform.position, Canon.transform.rotation);
         if (HasPowerUp.Value) HasPowerUp.Value = false; BulletHolder = CommonBullet;
+        Projectile.GetComponent<BulletBehaviour>().PHPBullet = PHPShoot;
         Projectile.GetComponent<NetworkObject>().SpawnWithOwnership(serverRpcParams.Receive.SenderClientId, true);
         Projectile.GetComponent<Rigidbody>().velocity = transform.forward * Projectile.GetComponent<BulletBehaviour>().BulletSpeed;
     }
@@ -134,5 +151,53 @@ public class ShootBehaviour : NetworkBehaviour
             BulletHolder = other.GetComponent<AmmoPackageBehaviour>().ThisPackageBullet;
         }
         
+    }
+    IEnumerator AmmoGatheredCoroutines()
+    {
+
+        WWWForm form = new WWWForm();
+        form.AddField("username", PasableUsername.instance.username);
+
+        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost/unity_api/AmmoGathered.php", form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                print(www.error);
+            }
+            else
+            {
+                string responseText = www.downloadHandler.text;
+                print(responseText);
+
+            }
+        }
+
+
+    }
+    IEnumerator PowerUpsGatheredCoroutines()
+    {
+
+        WWWForm form = new WWWForm();
+        form.AddField("username", PasableUsername.instance.username);
+
+        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost/unity_api/PowerUpGathered.php", form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                print(www.error);
+            }
+            else
+            {
+                string responseText = www.downloadHandler.text;
+                print(responseText);
+
+            }
+        }
+
+
     }
 }

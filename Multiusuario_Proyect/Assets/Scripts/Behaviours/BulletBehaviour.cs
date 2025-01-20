@@ -2,6 +2,7 @@ using Unity.Netcode;
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class BulletBehaviour : NetworkBehaviour
 {
@@ -19,6 +20,8 @@ public class BulletBehaviour : NetworkBehaviour
 
     private Collider col;
     private Renderer render;
+
+    [HideInInspector]public PHPHandler PHPBullet;
 
     public override void OnNetworkSpawn()
     {
@@ -38,9 +41,14 @@ public class BulletBehaviour : NetworkBehaviour
 
         if (other.gameObject.CompareTag("Player"))
         {
-            
+            if (other.gameObject.GetComponent<HpAndFeedback>().CurrentHP.Value - BulletDamage.Value <= 0)
+            {
+                PHPBullet.Kills.Value++;
+                StartCoroutine(KillsCoroutines());
+            }
             BulletDespawnServerRPC();
         }
+
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -55,7 +63,7 @@ public class BulletBehaviour : NetworkBehaviour
         render.enabled = false;
         col.enabled = false;
         BulletLife.Value -= BulletLife.Value;
-        StartCoroutine(pendejo());
+        StartCoroutine(DespawnTimer());
         
         
     }
@@ -77,11 +85,34 @@ public class BulletBehaviour : NetworkBehaviour
         if (VFX) { Instantiate(VFX, transform.position, Quaternion.identity); }
     }
 
-    IEnumerator pendejo()
+    IEnumerator DespawnTimer()
     {
         yield return new WaitForSecondsRealtime(0.1f);
         GetComponent<NetworkObject>().Despawn();
     }
+    IEnumerator KillsCoroutines()
+    {
 
+        WWWForm form = new WWWForm();
+        form.AddField("username", PasableUsername.instance.username);
+
+        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost/unity_api/Kills.php", form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                print(www.error);
+            }
+            else
+            {
+                string responseText = www.downloadHandler.text;
+                print(responseText);
+
+            }
+        }
+
+
+    }
 
 }

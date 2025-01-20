@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;
 using UnityEngine.SceneManagement;
 using Unity.VisualScripting;
 using UnityEngine.UIElements;
+using UnityEngine.Networking;
 
 public class HpAndFeedback : NetworkBehaviour
 {
@@ -18,6 +19,7 @@ public class HpAndFeedback : NetworkBehaviour
 
     private bool IsSizeChanging = false;
     private int TempDamage;
+    private bool IsRespawning;
 
     private SkinnedMeshRenderer Render;
     private Material OwnMaterial;
@@ -29,8 +31,12 @@ public class HpAndFeedback : NetworkBehaviour
     private PlayerAnimHandler playerAnimHandler;
     private ShootBehaviour playerShoot;
     private PlayerSmovement playerMove;
+    private PHPHandler PHP;
 
     public List<GameObject> SpawnPoints = new List<GameObject>();
+
+
+    
 
     private void Awake()
     {
@@ -40,16 +46,18 @@ public class HpAndFeedback : NetworkBehaviour
         {
             SpawnPoints.Add(obj);
         }
+
     }
 
     public override void OnNetworkSpawn()
     {
-        if (IsOwner) { UI.SetActive(true); }
+        if (IsOwner) { UI.SetActive(true); StartCoroutine(GamesPlayedCoroutines()); }
 
         base.OnNetworkSpawn();
         playerAnimHandler = GetComponentInChildren<PlayerAnimHandler>();
         playerShoot = GetComponent<ShootBehaviour>();
         playerMove = GetComponent<PlayerSmovement>();
+        PHP = GetComponent<PHPHandler>();
 
         rb = GetComponent<Rigidbody>();
         col = GetComponent<Collider>();
@@ -57,6 +65,10 @@ public class HpAndFeedback : NetworkBehaviour
         OwnMaterial = Render.material;
  
         CurrentHP.Value = MaxHP;
+        PHP.Deaths.Value = 0;
+        PHP.Kills.Value = 0;
+
+        
     }
 
     private void Start()
@@ -137,19 +149,35 @@ public class HpAndFeedback : NetworkBehaviour
         {
             playerMove.enabled = false;
             playerAnimHandler.UpdateState(PlayerAnimHandler.PlayerState.DEATH);
-            StartCoroutine(PlayerRespawn());
+            if (!IsRespawning)
+            {
+                StartCoroutine(PlayerRespawn());
+
+            }
         }
     }
 
     #region Respawn Hell
+    [ServerRpc(RequireOwnership = false)]
+    public void upDeathsServerRPC()
+    {
+        PHP.Deaths.Value++;
+    }
     IEnumerator PlayerRespawn()
     {
+        IsRespawning = true;
+        upDeathsServerRPC();
+        GameManager.Instance.total_deaths.Value++;
+        StartCoroutine(DeathsCoroutines());
+
         yield return new WaitForSeconds(1f);
         DespawnLogicClientRPC();
        
         yield return new WaitForSeconds(2f);
        
         RespawnLogicClientRPC();
+        IsRespawning = false;
+
 
     }
 
@@ -185,5 +213,53 @@ public class HpAndFeedback : NetworkBehaviour
         transform.position = SpawnPoints[Random.Range(0, SpawnPoints.Count)].transform.position;
     }
 
+    IEnumerator DeathsCoroutines()
+    {
+
+        WWWForm form = new WWWForm();
+        form.AddField("username", PasableUsername.instance.username);
+
+        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost/unity_api/Deaths.php", form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                print(www.error);
+            }
+            else
+            {
+                string responseText = www.downloadHandler.text;
+                print(responseText);
+
+            }
+        }
+
+
+    }
+    IEnumerator GamesPlayedCoroutines()
+    {
+
+        WWWForm form = new WWWForm();
+        form.AddField("username", PasableUsername.instance.username);
+
+        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost/unity_api/GamesPlayed.php", form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                print(www.error);
+            }
+            else
+            {
+                string responseText = www.downloadHandler.text;
+                print(responseText);
+
+            }
+        }
+
+
+    }
 
 }
