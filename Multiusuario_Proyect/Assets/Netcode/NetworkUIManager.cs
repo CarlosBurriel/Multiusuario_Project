@@ -11,8 +11,8 @@ public class NetworkUIManager : MonoBehaviour
 
     private void Awake()
     {
-        hostBTTN.onClick.AddListener(() => { NetworkManager.Singleton.StartHost(); });
-        serverBTTN.onClick.AddListener(() => { NetworkManager.Singleton.StartServer(); });
-        clientBTTN.onClick.AddListener(() => { NetworkManager.Singleton.StartClient(); });
+        hostBTTN.onClick.AddListener(() => { NetworkManager.Singleton.StartHost(); gameObject.SetActive(false); });
+        serverBTTN.onClick.AddListener(() => { NetworkManager.Singleton.StartServer(); gameObject.SetActive(false); });
+        clientBTTN.onClick.AddListener(() => { NetworkManager.Singleton.StartClient(); gameObject.SetActive(false); });
     }
 }
