@@ -13,6 +13,7 @@ if ($conn->connect_error) {
 }
 
 // Recibir datos del formulario
+$inputGameID = $_POST['gameid'];
 $inputTotal_Deaths = $_POST['deaths'];
 $inputTotal_PowerUps = $_POST['powerups'];
 $inputTotal_Ammo_Gathered = $_POST['ammo'];
@@ -23,7 +24,7 @@ $inputLoser_c = $_POST['loserC'];
 
 
 // Consultar base de datos
-$sql =  "INSERT INTO games (total_deaths,total_powerups,total_ammo_gathered,winner,loser_a,loser_b,loser_c) VALUES('$inputTotal_Deaths', '$inputTotal_PowerUps', '$inputTotal_Ammo_Gathered',(SELECT account_id FROM accounts WHERE username= '$inputWinner'),(SELECT account_id FROM accounts WHERE username= '$inputLoser_a'), (SELECT account_id FROM accounts WHERE username= '$inputLoser_b'), (SELECT account_id FROM accounts WHERE username= '$inputLoser_c'))";
+$sql =  "UPDATE games SET total_deaths='$inputTotal_Deaths',total_powerups='$inputTotal_PowerUps',total_ammo_gathered='$inputTotal_Ammo_Gathered',winner=(SELECT account_id FROM accounts WHERE username= '$inputWinner'),loser_a=(SELECT account_id FROM accounts WHERE username= '$inputLoser_a'),loser_b=(SELECT account_id FROM accounts WHERE username= '$inputLoser_b'),loser_c=(SELECT account_id FROM accounts WHERE username= '$inputLoser_c') WHERE games_id= '$inputGameID' ";
 
 $result = $conn->query($sql);
 
