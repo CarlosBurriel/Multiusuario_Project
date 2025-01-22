@@ -31,6 +31,9 @@ public class ShootBehaviour : NetworkBehaviour
     private PlayerAnimHandler playerAnimHandler;
 
     private PHPHandler PHPShoot;
+
+    [HideInInspector] public int AmmoGathered;
+    [HideInInspector] public int PowerUpsGathered;
      
 
     public override void OnNetworkSpawn()
@@ -104,11 +107,13 @@ public class ShootBehaviour : NetworkBehaviour
             HasPowerUp.Value = true; Ammo.Value++; 
             StartCoroutine(PowerUpsGatheredCoroutines());
             GameManager.Instance.total_powerups.Value++;
+            PowerUpsGathered++;
         } 
         else 
         { 
             Ammo.Value = MaxAmmo; StartCoroutine(AmmoGatheredCoroutines());
             GameManager.Instance.total_ammo_gathered.Value++;
+            AmmoGathered++;
         }
         if (Ammo.Value > MaxAmmo) { Ammo.Value = MaxAmmo; }
         

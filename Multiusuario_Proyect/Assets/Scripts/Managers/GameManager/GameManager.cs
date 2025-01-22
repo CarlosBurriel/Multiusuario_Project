@@ -7,7 +7,7 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
-
+using System.Linq;
 
 public class GameManager : NetworkBehaviour
 {
@@ -18,8 +18,8 @@ public class GameManager : NetworkBehaviour
     [Space]
     [Header("Duration of Play")]
     [Space]
-    public float DurationOfPlay;
-    public float DurationOfEnding;
+    public int DurationOfPlay;
+    public int DurationOfEnding;
 
     [Space]
     [Header("Game Manager Canvas")]
@@ -32,10 +32,12 @@ public class GameManager : NetworkBehaviour
     public NetworkVariable<int> total_powerups = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
     public NetworkVariable<int> total_ammo_gathered = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
-    [HideInInspector] public List<PHPHandler> Players;
-    private float CurrentTime;
+    public List<PHPHandler> Players;
+
+    public int CurrentTime;
     private bool Started = false;
 
+    public int CurrentGameID;
     
    
 
@@ -150,27 +152,29 @@ public class GameManager : NetworkBehaviour
         if (IsOwner)
         {
         StartCoroutine(GameDataCoroutines());
-        }
         StartCoroutine(WinnersCoroutines());
         for (int i = 0; i < Losers.Count; i++)
         {
-            print(Losers[i].PlayerUsername);
+           
             StartCoroutine(LosersCoroutines(i));
         }
-       for(int i=0; i< Winners.Count; i++)
-        {
-            print(Winners[i].PlayerUsername);
-        }
-
-       
 
         for (int i = 0; i < Players.Count;i++)
         {
-            Destroy(Players[i].gameObject);
-            Players.Remove(Players[i]);
+            if (!IsClient) { continue; }
+            StartCoroutine(Players[i].gameObject.GetComponent<HpAndFeedback>().GamesHistoryCoroutines());
+            
+           
         }
+        }
+        StartCoroutine(explosion());
+    }
+
+    IEnumerator explosion()
+    {
+        yield return new WaitForSeconds(2f);
         NetworkManager.Singleton.Shutdown();
-        if(SceneManager.GetActiveScene().name == "GameLevel") { SceneManager.LoadScene("GameLevel2"); } else { SceneManager.LoadScene("GameLevel"); }
+        if (SceneManager.GetActiveScene().name == "GameLevel") { SceneManager.LoadScene("GameLevel2"); } else { SceneManager.LoadScene("GameLevel"); }
 
     }
 
@@ -178,7 +182,7 @@ public class GameManager : NetworkBehaviour
     {
 
         WWWForm form = new WWWForm();
-        form.AddField("username",Winners[0].PlayerUsername);
+        form.AddField("username",Winners[0].PlayerUsername.Value.ToString());
 
         using (UnityWebRequest www = UnityWebRequest.Post("http://localhost/unity_api/Winner.php", form))
         {
@@ -202,7 +206,7 @@ public class GameManager : NetworkBehaviour
     {
 
         WWWForm form = new WWWForm();
-        form.AddField("username", Losers[i].PlayerUsername);
+        form.AddField("username", Losers[i].PlayerUsername.Value.ToString());
 
         using (UnityWebRequest www = UnityWebRequest.Post("http://localhost/unity_api/Defeats.php", form))
         {
@@ -240,28 +244,33 @@ public class GameManager : NetworkBehaviour
             {
                 string responseText = www.downloadHandler.text;
                 print(responseText);
+                responseText = string.Concat(responseText.Where(Char.IsDigit));
+                CurrentGameID = Int32.Parse(responseText);
+                
 
             }
         }
 
 
     }
+    
     IEnumerator GameDataCoroutines()
     {
 
         WWWForm form = new WWWForm();
+        form.AddField("gameid", CurrentGameID);
         form.AddField("deaths", total_deaths.Value);
         form.AddField("powerups", total_powerups.Value);
         form.AddField("ammo", total_ammo_gathered.Value);
-        form.AddField("winner", Winners[0].PlayerUsername);
-        form.AddField("loserA", Losers[0].PlayerUsername);
+        form.AddField("winner", Winners[0].PlayerUsername.Value.ToString());
+        form.AddField("loserA", Losers[0].PlayerUsername.Value.ToString());
         if (Losers.Count <= 2)
         {
             form.AddField("loserB", "furrito77");
         }
         else
         {
-            form.AddField("loserB", Losers[1].PlayerUsername);
+            form.AddField("loserB", Losers[1].PlayerUsername.Value.ToString());
         }
         if (Losers.Count <= 3)
         {
@@ -269,7 +278,7 @@ public class GameManager : NetworkBehaviour
         }
         else
         {
-        form.AddField("loserC", Losers[2].PlayerUsername);
+        form.AddField("loserC", Losers[2].PlayerUsername.Value.ToString());
         }
         using (UnityWebRequest www = UnityWebRequest.Post("http://localhost/unity_api/GamesID.php", form))
         {

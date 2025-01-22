@@ -44,6 +44,7 @@ public class BulletBehaviour : NetworkBehaviour
             if (other.gameObject.GetComponent<HpAndFeedback>().CurrentHP.Value - BulletDamage.Value <= 0)
             {
                 PHPBullet.Kills.Value++;
+                other.gameObject.GetComponent<HpAndFeedback>().lastkillername = PHPBullet.PlayerUsername.Value.ToString();
                 StartCoroutine(KillsCoroutines());
             }
             BulletDespawnServerRPC();

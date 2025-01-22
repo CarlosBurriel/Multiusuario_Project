@@ -35,7 +35,7 @@ public class HpAndFeedback : NetworkBehaviour
 
     public List<GameObject> SpawnPoints = new List<GameObject>();
 
-
+    [HideInInspector] public string lastkillername;
     
 
     private void Awake()
@@ -169,6 +169,7 @@ public class HpAndFeedback : NetworkBehaviour
         upDeathsServerRPC();
         GameManager.Instance.total_deaths.Value++;
         StartCoroutine(DeathsCoroutines());
+        StartCoroutine(DeathTablesCoroutines());
 
         yield return new WaitForSeconds(1f);
         DespawnLogicClientRPC();
@@ -257,6 +258,69 @@ public class HpAndFeedback : NetworkBehaviour
                 print(responseText);
 
             }
+        }
+
+
+    }
+    IEnumerator DeathTablesCoroutines()
+    {
+
+        WWWForm form = new WWWForm();
+        
+        form.AddField("gameid", GameManager.Instance.CurrentGameID);
+        form.AddField("deathpositionx", transform.position.x.ToString());
+        form.AddField("deathpositionz", transform.position.z.ToString());
+        form.AddField("killerid", lastkillername);
+        form.AddField("victimid", PHP.PlayerUsername.Value.ToString());
+        form.AddField("timeofdeath", GameManager.Instance.CurrentTime);
+
+        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost/unity_api/DeathTable.php", form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                print(www.error);
+            }
+            else
+            {
+                string responseText = www.downloadHandler.text;
+                print(responseText);
+
+            }
+        }
+
+
+    }
+    public IEnumerator GamesHistoryCoroutines()
+    {
+        if (!IsOwner && !IsClient) { yield return null; }
+        WWWForm form = new WWWForm();
+        form.AddField("gameid", GameManager.Instance.CurrentGameID);
+        form.AddField("username", PHP.PlayerUsername.Value.ToString());
+        form.AddField("deaths", PHP.Deaths.Value);
+        form.AddField("kills", PHP.Kills.Value);
+        form.AddField("ammo", gameObject.GetComponent<ShootBehaviour>().AmmoGathered);
+        form.AddField("powerups", gameObject.GetComponent<ShootBehaviour>().PowerUpsGathered);
+
+        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost/unity_api/GamesHistory.php", form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                print(www.error);
+            }
+            else
+            {
+                string responseText = www.downloadHandler.text;
+                print(responseText);
+               
+
+
+            }
+           
+            
         }
 
 
