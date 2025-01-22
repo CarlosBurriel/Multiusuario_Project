@@ -9,8 +9,6 @@ public class PHPHandler : NetworkBehaviour
     //Get PlayerUsername from when login
     [HideInInspector] public string PlayerUsername;
 
-    
-
     public NetworkVariable<int> Deaths = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
     public NetworkVariable<int> Kills = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
